@@ -56,12 +56,15 @@ class manage_facultyController extends Controller
 			return;
 		}
 
+		$check_all = filter_input(INPUT_POST, "check_all", FILTER_SANITIZE_FULL_SPECIAL_CHARS) ?? 0;
 		$teacher = filter_input(INPUT_POST, "teacher", FILTER_SANITIZE_FULL_SPECIAL_CHARS) ?? null;
 		$subject = $_POST['subject'] ?? null;
-		if(isset($teacher) && isset($subject))
+
+		if(isset($check_all) && isset($teacher) && isset($subject))
 		{
 			$object = new facultyModel();
 			$result = $object->store([
+				'check_all' => $check_all,
 				'teacher' => $teacher,
 				'subject' => $subject,
 			]);
@@ -128,14 +131,20 @@ class manage_facultyController extends Controller
 		}
 
 		$id = filter_input(INPUT_POST, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS) ?? null;
+		$check_all = filter_input(INPUT_POST, "check_all", FILTER_SANITIZE_FULL_SPECIAL_CHARS) ?? 0;
+		$old_subjects = filter_input(INPUT_POST, "d_subjects", FILTER_SANITIZE_FULL_SPECIAL_CHARS) ?? null;
 		$teacher_old = filter_input(INPUT_POST, "e_teacher_old", FILTER_SANITIZE_FULL_SPECIAL_CHARS) ?? null;
 		$teacher = filter_input(INPUT_POST, "e_teacher", FILTER_SANITIZE_FULL_SPECIAL_CHARS) ?? null;
 		$subject = $_POST['e_subject'] ?? null;
+		
 		if(isset($id) && isset($teacher_old) && isset($teacher) && isset($subject))
 		{
+
 			$object = new facultyModel();
 			$result = $object->update([
 				'id' => $id,
+				'check_all' => $check_all,
+				'old_subjects' => $old_subjects,
 				'teacher_old' => $teacher_old,
 				'teacher' => $teacher,
 				'subject' => $subject,
@@ -175,12 +184,14 @@ class manage_facultyController extends Controller
 		}
 
 		$id = filter_input(INPUT_POST, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS) ?? null;
+		$subjects = filter_input(INPUT_POST, "d_subjects", FILTER_SANITIZE_FULL_SPECIAL_CHARS) ?? null;
 		$user_id = filter_input(INPUT_POST, "e_teacher", FILTER_SANITIZE_FULL_SPECIAL_CHARS) ?? null;
-		if(isset($id) && isset($user_id))
+		if(isset($id) && isset($subjects) && isset($user_id))
 		{
 			$object = new facultyModel();
 			$result = $object->delete([
 				'id' => $id,
+				'subjects' => $subjects,
 				'user_id' => $user_id,
 			]);
 

@@ -85,7 +85,26 @@ class loginController extends Controller
 						
 						$this->controller->view()->render5('pages/manage_faculty/manage_faculty.php', $section, $subject, $teacher, $faculty, $role);
 					}
-					elseif($arr_multi_role[1] == 'Cashier')
+					if($arr_multi_role[1] == 'Subject Assignee')
+					{
+						$object = new sectionModel();
+						$section = $object->index();
+				
+						$object = new subjectModel();
+						$subject = $object->index();
+				
+						$object = new userModel();
+						$teacher = $object->index_teacher();
+				
+						$object = new facultyModel();
+						$faculty = $object->index();
+				
+						$object = new role_and_permissionModel();
+						$role = $object->index();
+						
+						$this->controller->view()->render5('pages/manage_faculty/manage_assignee.php', $section, $subject, $teacher, $faculty, $role);
+					}
+					elseif($arr_multi_role[1] == 'School Treasurer')
 					{
 
 						$object = new feesModel();

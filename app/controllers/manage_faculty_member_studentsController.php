@@ -40,6 +40,13 @@ class manage_faculty_member_studentsController extends Controller
 			$object = new subjectModel();
 			$subject = $object->index();
 			$new_subjects = '';
+			$object = new facultyMemberStudentsModel();
+			$student_by_subejcts = $object->get_student_by_subjects(['subjects' => $subjects]);
+			$object = new facultyMemberStudentsModel();
+			$teacher = $object->get_teacher_by_faculty_id(['faculty_id' => $faculty_id]);
+
+			// die(json_encode($student_by_subejcts));
+			// die(json_encode($teacher['subjects']));
 
 			if(count($student) > 0)
 			{
@@ -55,7 +62,7 @@ class manage_faculty_member_studentsController extends Controller
 				$subjects = implode(",", array_intersect($arr_student_subjects, $arr_student_subs));
 				$new_subjects = empty($new_subjects) ? 'none': $new_subjects;
 			}
-			$this->controller->view()->render_data4('pages/manage_faculty/manage_faculty_member_students.php', $subject, $subjects, $student, $faculty_id, $new_subjects);
+			$this->controller->view()->render_data6('pages/manage_faculty/manage_faculty_member_students.php', $subject, $subjects, $student, $faculty_id, $new_subjects, $student_by_subejcts, $teacher);
 		}
 		else
 		{

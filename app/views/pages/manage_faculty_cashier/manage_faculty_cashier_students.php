@@ -12,7 +12,7 @@
                                 <a class="btn btn-primary" href="<?php echo ROOT;?>manage_faculty_cashier" style="width: 80px; height: 45px;">
                                     <i class="fa fa-reply"></i>
                                 </a>
-                                <p class="d-none d-md-inline">Cashier Student List</p>
+                                <p class="d-none d-md-inline">School Treasurer Student List</p>
                             </h3>
                         </div>
                         <div class="col-12">
@@ -99,7 +99,7 @@
                                                                                     <input class="form-control" type="text" name="status" value="<?php echo $result['status']?>" readonly hidden>
                                                                                     <button class="btn btn-primary w-100 mb-2">
                                                                                         <i class="fa fa-signature"></i>
-                                                                                        Chared
+                                                                                        Cleared
                                                                                     </button>
                                                                                 </form>
                                                                             </li>
@@ -118,7 +118,7 @@
                                                                 }
                                                                 else
                                                                 {
-                                                                    echo '<b>Chared</b>';
+                                                                    echo '<b>Cleared</b>';
                                                                 }
                                                             ?>
                                                         </td>

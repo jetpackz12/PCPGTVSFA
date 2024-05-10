@@ -146,6 +146,46 @@ class userModel extends model
         return $data;
     }
 
+    public function authentication_for_signatory($param=array())
+    {
+        $username = $param['username'];
+        $password = $param['password'];
+        $data = array();
+
+        $sql = "SELECT * FROM users
+        WHERE username = '" .$username. "'";
+        $result = $this->con->query($sql);
+        if($result->num_rows > 0)
+        {
+            $row = $result->fetch_assoc();
+
+            if(!password_verify($password, $row['password']))
+            {
+                $data = array(
+                    'response' => '0',
+                    'message' => "Login failed, Please check your username and password."
+                );
+                return $data;
+            }
+
+            $data = array(
+                'response' => '1',
+                'message' => "Login success.",
+                'data' => $row
+            );
+        }
+        else
+        {
+            $data = array(
+                'response' => '0',
+                'message' => "Login failed, Please check your username and password."
+            );
+        }
+
+        $this->con->close();
+        return $data;
+    }
+
     public function index_student() {
         $data = array();
 
@@ -184,6 +224,18 @@ class userModel extends model
         $role_id = '2';
         $created_at = date('Y-m-d H:i:s');
         $data = array();
+
+        // $sql = "SELECT * FROM requirements";
+        // $result = $this->con->query($sql);
+        // if($result->num_rows > 0)
+        // {
+        //     $data = array(
+        //         'response' => '0',
+        //         'message' => "Failed, New students cannot be added once the clearance process has started."
+        //     );
+
+        //     return $data;
+        // }
 
         $sql = "SELECT username FROM users 
                 WHERE username = '".$username."'";

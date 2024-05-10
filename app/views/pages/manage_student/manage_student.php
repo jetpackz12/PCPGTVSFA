@@ -361,7 +361,7 @@
                                     <span class="input-group-text" style="width: 42%;">
                                         Password:
                                     </span>
-                                    <input class="form-control" type="password" name="e_password" id="e_password" placeholder="Please enter password." required>
+                                    <input class="form-control" type="password" name="e_password" id="e_password" placeholder="Please enter password." required readonly>
                                     <button type="button" class="input-group-text btn btn-secondary" id="e_password_button">
                                         <i class="fa fa-pen-square"></i>
                                     </button>
@@ -373,7 +373,7 @@
                                     <span class="input-group-text" style="width: 42%;">
                                         Confirm password:
                                     </span>
-                                    <input class="form-control" type="password" name="e_confirm_password" id="e_confirm_password" placeholder="Please enter confirm password." required>
+                                    <input class="form-control" type="password" name="e_confirm_password" id="e_confirm_password" placeholder="Please enter confirm password." required readonly>
                                     <button type="button" class="input-group-text btn btn-secondary" id="e_confirm_password_button">
                                         <i class="fa fa-pen-square"></i>
                                     </button>
@@ -565,6 +565,14 @@
                         $('#e_confirm_password').val(json['password']);
                         pass = json['password'];
 
+                        
+                        $('#e_password').prop('readonly', true);
+                        $('#e_confirm_password').prop('readonly', true);
+                        $('#e_password_cancel').addClass('d-none');
+                        $('#e_confirm_password_cancel').addClass('d-none');
+                        $('#e_password_button').removeClass('d-none');
+                        $('#e_confirm_password_button').removeClass('d-none');
+
                         editModalSubjects();
                         
                     }
@@ -699,6 +707,8 @@
                 $('#e_password_button').on('click', () => {
                     $('#e_password').val("");
                     $('#e_confirm_password').val("");
+                    $('#e_password').prop('readonly', false);
+                    $('#e_confirm_password').prop('readonly', false);
                     $('#e_password_button').addClass('d-none');
                     $('#e_confirm_password_button').addClass('d-none');
                     $('#e_password_cancel').removeClass('d-none');
@@ -708,6 +718,8 @@
                 $('#e_confirm_password_button').on('click', () => {
                     $('#e_password').val("");
                     $('#e_confirm_password').val("");
+                    $('#e_password').prop('readonly', false);
+                    $('#e_confirm_password').prop('readonly', false);
                     $('#e_password_button').addClass('d-none');
                     $('#e_confirm_password_button').addClass('d-none');
                     $('#e_password_cancel').removeClass('d-none');
@@ -717,6 +729,8 @@
                 $('#e_password_cancel').on('click', () => {
                     $('#e_password').val(pass);
                     $('#e_confirm_password').val(pass);
+                    $('#e_password').prop('readonly', true);
+                    $('#e_confirm_password').prop('readonly', true);
                     $('#e_password_cancel').addClass('d-none');
                     $('#e_confirm_password_cancel').addClass('d-none');
                     $('#e_password_button').removeClass('d-none');
@@ -726,6 +740,8 @@
                 $('#e_confirm_password_cancel').on('click', () => {
                     $('#e_password').val(pass);
                     $('#e_confirm_password').val(pass);
+                    $('#e_password').prop('readonly', true);
+                    $('#e_confirm_password').prop('readonly', true);
                     $('#e_confirm_password_cancel').addClass('d-none');
                     $('#e_password_cancel').addClass('d-none');
                     $('#e_password_button').removeClass('d-none');

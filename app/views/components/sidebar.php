@@ -18,19 +18,19 @@
                 <h2 class="accordion-header" style="height: 60px;">
                     <button class="accordion-button gap-1 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAdvisoryTeacher" aria-expanded="false" aria-controls="collapseAdvisoryTeacher">
                         <i class="fa fa-chalkboard-user"></i>
-                        Manage Advisory And Teacher
+                        Manage Teacher And Advisory
                     </button>
                 </h2>
                 <div id="collapseAdvisoryTeacher" class="accordion-collapse collapse" data-bs-parent="#accordionManageAdvisoryTeacher">
                     <div class="accordion-body d-flex flex-column gap-2 pt-4">
-                        <?php if(in_array("Advisory", $arr_multi_role)) { ?>
-                            <a class="text-black text-decoration-none rounded-2 border border-black d-flex align-items-center justify-content-center list-group-item list-group-item-action manage_advisory" href="<?php echo ROOT;?>manage_advisory" style="height: 60px;">
-                                Advisory
-                            </a>
-                        <?php } ?>
                         <?php if(in_array("Teacher", $arr_multi_role)) { ?>
                             <a class="text-black text-decoration-none rounded-2 border border-black d-flex align-items-center justify-content-center list-group-item list-group-item-action manage_teacher" href="<?php echo ROOT;?>manage_teacher" style="height: 60px;">
                                 Teacher
+                            </a>
+                        <?php } ?>
+                        <?php if(in_array("Advisory", $arr_multi_role)) { ?>
+                            <a class="text-black text-decoration-none rounded-2 border border-black d-flex align-items-center justify-content-center list-group-item list-group-item-action manage_advisory" href="<?php echo ROOT;?>manage_advisory" style="height: 60px;">
+                                Advisory
                             </a>
                         <?php } ?>
                     </div>
@@ -54,9 +54,19 @@
                             Assign Subjects
                             </a>
                         <?php } ?>
-                        <?php if(in_array("Cashier", $arr_multi_role)) { ?>
+                        <?php if(in_array("Subject Assignee", $arr_multi_role)) { ?>
+                            <a class="text-black text-decoration-none rounded-2 border border-black d-flex align-items-center justify-content-center list-group-item list-group-item-action manage_assignee" href="<?php echo ROOT;?>manage_assignee" style="height: 60px;">
+                            Subject Assignee
+                            </a>
+                        <?php } ?>
+                        <?php if(in_array("School Treasurer", $arr_multi_role)) { ?>
                             <a class="text-black text-decoration-none rounded-2 border border-black d-flex align-items-center justify-content-center list-group-item list-group-item-action manage_faculty_cashier" href="<?php echo ROOT;?>manage_faculty_cashier" style="height: 60px;">
-                                Cashier
+                                School Treasurer 
+                            </a>
+                        <?php } ?>
+                        <?php if(in_array("Other Signatory", $arr_multi_role)) { ?>
+                            <a class="text-black text-decoration-none rounded-2 border border-black d-flex align-items-center justify-content-center list-group-item list-group-item-action manage_faculty_signatory" href="<?php echo ROOT;?>manage_faculty_signatory" style="height: 60px;">
+                                Register Other Signatory
                             </a>
                         <?php } ?>
                     </div>

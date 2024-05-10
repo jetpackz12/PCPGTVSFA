@@ -31,7 +31,7 @@ class manage_advisory_studentsController extends Controller
 		
 		$advisory_id = filter_input(INPUT_GET, "advisory_id", FILTER_SANITIZE_FULL_SPECIAL_CHARS) ?? null;
 		$sections_id = filter_input(INPUT_GET, "sections_id", FILTER_SANITIZE_FULL_SPECIAL_CHARS) ?? null;
-		if(isset($advisory_id) &&  isset($sections_id))
+		if(isset($advisory_id) && isset($sections_id))
 		{
 			$object = new advisoryStudentsModel();
 			$student_ids = $object->get_student_ids([

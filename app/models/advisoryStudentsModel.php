@@ -136,7 +136,7 @@ class advisoryStudentsModel extends model
         {
             $data = array(
                 'response' => '1',
-                'message' => "Success, You have successfully chared all student."
+                'message' => "Success, You have successfully cleared all student."
             );
         }
         else
@@ -163,7 +163,7 @@ class advisoryStudentsModel extends model
         {
             $data = array(
                 'response' => '1',
-                'message' => "Success, You have successfully chared this student."
+                'message' => "Success, You have successfully cleared this student."
             );
         }
         else
@@ -211,10 +211,12 @@ class advisoryStudentsModel extends model
         $sections_id = $param['sections_id'];
         $data = array();
 
-        $sql = "SELECT users.id
+        $sql = "SELECT users.id, users.image_path, grades.grade, sections.section, CONCAT(adviser.fname, ' ', adviser.mname, ' ', adviser.lname) AS adviser_fullname, CONCAT(users.fname, ' ', users.mname, ' ', users.lname) AS student_fullname
         FROM users
         INNER JOIN sections ON sections.id = users.section_id
         INNER JOIN grades ON grades.id = sections.grade_id
+        INNER JOIN advisories ON advisories.section_id = sections.id
+        INNER JOIN users AS adviser ON adviser.id = advisories.user_id
         WHERE users.section_id = '".$sections_id."' AND users.role_id = '2'";
         $result = $this->con->query($sql);
         if($result->num_rows > 0)

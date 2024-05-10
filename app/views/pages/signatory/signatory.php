@@ -9,53 +9,14 @@
                     <div class="row mt-3 gap-3">
                         <div class="col-12 d-flex justify-content-between">
                             <h3 class="d-inline">
-                                <?php
-                                if (isset($_SESSION['multi_role'])) {
-                                    $arr_multi_role = explode(",", $_SESSION['multi_role']['permission']);
-                                    if (in_array("Advisory", $arr_multi_role)) {
-                                ?>
-                                        <a class="btn btn-primary" href="<?php echo ROOT; ?>manage_advisory" style="width: 80px; height: 45px;">
-                                            <i class="fa fa-reply"></i>
-                                        </a>
-                                <?php
-                                    }
-                                }
-                                ?>
-                                <p class="d-none d-md-inline">Advisory Student List</p>
+                                <p class="d-none d-md-inline">Signatory Student List</p>
                             </h3>
-                            <?php
-                            if (count($data) > 0 && $data4['status_sum'] > 0) {
-                                echo '
-                                        <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#updateModal" style="height: 45px;">
-                                            <i class="fa fa-edit"></i>
-                                            Update Requirements
-                                        </button>
-                                        ';
-                            } else if (count($data) < 1) {
-                                echo '
-                                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal" style="height: 45px;">
-                                            <i class="fa fa-plus-circle"></i>
-                                            Add Requirements
-                                        </button>
-                                        ';
-                            }
-                            ?>
                         </div>
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-body">
                                     <div class="row mb-2 gap-2">
                                         <div class="col-12 col-md-2">
-                                            <?php
-                                            if ($data4['status_sum'] > 0) {
-                                                echo '
-                                                <button class="btn btn-primary w-100 edit_button" data-bs-toggle="modal" data-bs-target="#charedAllModal">
-                                                    <i class="fa fa-signature"></i>
-                                                    Cleared All
-                                                </button>
-                                                ';
-                                            }
-                                            ?>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -67,79 +28,62 @@
                                                         <th>Profile</th>
                                                         <th>Fullname</th>
                                                         <th>Grade and Section</th>
-                                                        <th>Adviser</th>
                                                         <th>Requirements</th>
                                                         <th>Status</th>
                                                         <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <?php if (count($data) != 0) { ?>
-                                                        <?php $counter = 1;
-                                                        foreach ($data as $result) { ?>
-                                                            <tr>
-                                                                <td><?php echo $counter++; ?></td>
-                                                                <td>
-                                                                    <img class="img-thumbnail" src="<?php echo $result['image_path']; ?>" alt="Profile Image" style="width: 50px; height: 50px;">
-                                                                </td>
-                                                                <td><?php echo $result['student_fullname'] ?></td>
-                                                                <td><?php echo 'Grade ' . $result['grade'] . ' ( ' . $result['section'] . ' ) ' ?></td>
-                                                                <td><?php echo $result['adviser_fullname'] ?></td>
-                                                                <td><b><?php echo empty($result['requirements']) ? 'No Requirements' : $result['requirements']; ?></b></td>
-                                                                <td><b><?php echo $result['status'] == 1 ? 'Pending' : 'OK'; ?></b></td>
-                                                                <td>
-                                                                    <?php
-                                                                    if ($result['status'] == 1) {
-                                                                    ?>
-                                                                        <div class="dropdown">
-                                                                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                                Action
-                                                                            </button>
-                                                                            <ul class="dropdown-menu p-2">
-                                                                                <li>
-                                                                                    <form class="postForm" method="POST" action="<?php echo ROOT; ?>manage_advisory_students/chared">
-                                                                                        <input class="form-control" type="text" name="id" value="<?php echo $result['id'] ?>" readonly hidden>
-                                                                                        <input class="form-control" type="text" name="status" value="<?php echo $result['status'] ?>" readonly hidden>
-                                                                                        <button class="btn btn-primary w-100 mb-2">
-                                                                                            <i class="fa fa-signature"></i>
-                                                                                            Cleared
-                                                                                        </button>
-                                                                                    </form>
-                                                                                </li>
-                                                                                <li>
-                                                                                    <button class="btn btn-warning w-100 mb-2 edit_button" data-id="<?php echo $result['id'] ?>" data-bs-toggle="modal" data-bs-target="#editModal">
-                                                                                        <i class="fa fa-pen-square"></i>
-                                                                                        Edit Requirements
+                                                    <?php $counter = 1;
+                                                    foreach ($data as $result) { ?>
+                                                        <tr>
+                                                            <td><?php echo $counter++; ?></td>
+                                                            <td>
+                                                                <img class="img-thumbnail" src="<?php echo $result['image_path']; ?>" alt="Profile Image" style="width: 50px; height: 50px;">
+                                                            </td>
+                                                            <td><?php echo $result['fname'] . ' ' . $result['mname'] . ' ' . $result['lname'] ?></td>
+                                                            <td><?php echo 'Grade ' . $result['grade'] . ' ( ' . $result['section'] . ' ) ' ?></td>
+                                                            <td><b><?php echo $result['requirements'] ?? 'Add Requirements' ?></b></td>
+                                                            <td><b><?php echo ($result['status'] == 1)? 'Pending' : (($result['status'] == null)? 'Add Requirements' : 'OK');?></b></td>
+                                                            <td>
+                                                            <?php if ($result['requirements_status'] == 1 || $result['requirements_status'] == null) { ?>
+                                                                <div class="dropdown">
+                                                                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                        Action
+                                                                    </button>
+                                                                    <ul class="dropdown-menu p-2">
+                                                                        <?php if ($result['requirements_status']) { ?>
+                                                                            <li>
+                                                                                <form class="postForm" method="POST" action="<?php echo ROOT; ?>manage_faculty_signatory_students/chared">
+                                                                                    <input class="form-control" type="text" name="id" value="<?php echo $result['id'] ?>" readonly hidden>
+                                                                                    <input class="form-control" type="text" name="status" value="<?php echo $result['status'] ?>" readonly hidden>
+                                                                                    <button class="btn btn-primary w-100 mb-2">
+                                                                                        <i class="fa fa-signature"></i>
+                                                                                        Cleared
                                                                                     </button>
-                                                                                </li>
-                                                                            </ul>
-                                                                        </div>
-                                                                    <?php
-                                                                    } else {
+                                                                                </form>
+                                                                            </li>
+                                                                            <li>
+                                                                                <button class="btn btn-warning w-100 mb-2 edit_button" data-id="<?php echo $result['requirements_id'] ?>" data-bs-toggle="modal" data-bs-target="#editModal">
+                                                                                    <i class="fa fa-pen-square"></i>
+                                                                                    Edit Requirements
+                                                                                </button>
+                                                                            </li>
+                                                                        <?php } else { ?>
+                                                                            <li>
+                                                                                <button class="btn btn-primary w-100 mb-2 add_button" data-id="<?php echo $result['user_id'] ?>" data-bs-toggle="modal" data-bs-target="#addModal">
+                                                                                    <i class="fa fa-pen-square"></i>
+                                                                                    Add Requirements
+                                                                                </button>
+                                                                            </li>
+                                                                        <?php } ?>
+                                                                    </ul>
+                                                                </div>
+                                                                <?php } else {
                                                                         echo '<b>Cleared</b>';
-                                                                    }
-                                                                    ?>
-                                                                </td>
-                                                            </tr>
-                                                        <?php } ?>
-                                                    <?php } else { ?>
-                                                        <?php $counter = 1;
-                                                        foreach ($data3 as $result) { ?>
-                                                            <tr>
-                                                                <td><?php echo $counter++; ?></td>
-                                                                <td>
-                                                                    <img class="img-thumbnail" src="<?php echo $result['image_path']; ?>" alt="Profile Image" style="width: 50px; height: 50px;">
-                                                                </td>
-                                                                <td><?php echo $result['student_fullname'] ?></td>
-                                                                <td><?php echo 'Grade ' . $result['grade'] . ' ( ' . $result['section'] . ' ) ' ?></td>
-                                                                <td><?php echo $result['adviser_fullname'] ?></td>
-                                                                <td><b>Add Requirements</b></td>
-                                                                <td><b>Add Requirements</b></td>
-                                                                <td>
-                                                                    <b>Add Requirements</b>
-                                                                </td>
-                                                            </tr>
-                                                        <?php } ?>
+                                                                } ?>
+                                                            </td>
+                                                        </tr>
                                                     <?php } ?>
                                                 </tbody>
                                             </table>
@@ -162,12 +106,9 @@
                     <div class="modal-header">
                         <h1 class="modal-title fs-5" id="addModalLabel">Add Requirements</h1>
                     </div>
-                    <form class="postForm" method="POST" action="<?php echo ROOT; ?>manage_advisory_students/store">
+                    <form class="postForm" method="POST" action="<?php echo ROOT; ?>manage_faculty_signatory_students/store">
                         <div class="modal-body">
-                            <input class="form-control" type="text" name="advisory_id" value="<?php echo $data2 ?>" readonly hidden>
-                            <textarea class="form-control" name="student_ids" id="student_ids" rows="3" readonly hidden><?php foreach ($data3 as $result) {
-                                                                                                                            echo "," . $result['id'];
-                                                                                                                        } ?></textarea>
+                            <input class="form-control" type="text" name="id" id="id" readonly hidden>
                             <div class="row mt-3 gap-3">
                                 <div class="col-12">
                                     <label for="requirements" class="form-label">Requirements</label>
@@ -185,7 +126,7 @@
         </div>
 
         <!-- Update Modal -->
-        <div class="modal fade" id="updateModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="addModalLabel" aria-hidden="true">
+        <!-- <div class="modal fade" id="updateModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="addModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header bg-warning">
@@ -193,7 +134,6 @@
                     </div>
                     <form class="postForm" method="POST" action="<?php echo ROOT; ?>manage_advisory_students/update_requirements">
                         <div class="modal-body">
-                            <input class="form-control" type="text" name="advisory_id" value="<?php echo $data2 ?>" readonly hidden>
                             <div class="row mt-3 gap-3">
                                 <div class="col-12">
                                     <label for="requirements" class="form-label">Requirements</label>
@@ -208,7 +148,7 @@
                     </form>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <!-- Edit Modal -->
         <div class="modal fade" id="editModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="editModalLabel" aria-hidden="true">
@@ -217,9 +157,9 @@
                     <div class="modal-header bg-warning">
                         <h1 class="modal-title fs-5" id="editModalLabel">Edit Requirements</h1>
                     </div>
-                    <form class="postForm" method="POST" action="<?php echo ROOT; ?>manage_advisory_students/update">
+                    <form class="postForm" method="POST" action="<?php echo ROOT; ?>manage_faculty_signatory_students/update">
                         <div class="modal-body">
-                            <input class="form-control id" type="text" name="id" readonly hidden>
+                            <input class="form-control requirements_id" type="text" name="id" readonly hidden>
                             <div class="row mt-3 gap-3">
                                 <div class="col-12">
                                     <label for="requirements" class="form-label">Requirements</label>
@@ -237,7 +177,7 @@
         </div>
 
         <!-- Chared All Modal -->
-        <div class="modal fade" id="charedAllModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <!-- <div class="modal fade" id="charedAllModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="deleteModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-sm modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header bg-warning">
@@ -255,7 +195,7 @@
                     </form>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <script>
             const Toast = Swal.mixin({
@@ -303,8 +243,13 @@
                 });
             });
 
+            $('.add_button').on('click', function() {
+                const id = $(this).attr('data-id');
+                $('#id').val(id);
+            });
+
             $('.edit_button').on('click', function() {
-                const path = '<?php echo ROOT; ?>manage_advisory_students/edit';
+                const path = '<?php echo ROOT; ?>manage_faculty_signatory_students/edit';
                 const id = $(this).attr('data-id');
                 $.ajax({
                     type: "POST",
@@ -317,7 +262,7 @@
 
                         // console.log(data);
                         const json = JSON.parse(data);
-                        $('.id').val(json['id']);
+                        $('.requirements_id').val(json['id']);
                         $('#e_requirements').val(json['requirements']);
 
                     }
