@@ -45,6 +45,8 @@ class manage_facultyController extends Controller
 		$object = new role_and_permissionModel();
 		$role = $object->index();
 		
+		unset($_SESSION['filter_subject_id']);
+		
         $this->controller->view()->render5('pages/manage_faculty/manage_faculty.php', $section, $subject, $teacher, $faculty, $role);
 	}
 

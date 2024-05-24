@@ -63,6 +63,12 @@ class manage_assigneeController extends Controller
 	public function delete()
 	{
 	}
+
+	public function filter()
+	{
+		$filter_subject = filter_input(INPUT_POST, "filter_subject", FILTER_SANITIZE_FULL_SPECIAL_CHARS) ?? null;
+		$_SESSION['filter_subject_id'] = $filter_subject;
+	}
 	
 
 }

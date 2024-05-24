@@ -37,6 +37,8 @@ class manage_faculty_cashierController extends Controller
 		
 		$object = new cashierModel();
 		$payable = $object->index();
+		
+		unset($_SESSION['filter_subject_id']);
 
         $this->controller->view()->render3('pages/manage_faculty_cashier/manage_faculty_cashier.php', $fees, $grade, $payable);
 	}

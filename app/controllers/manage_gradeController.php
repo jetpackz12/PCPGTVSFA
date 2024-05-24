@@ -32,6 +32,8 @@ class manage_gradeController extends Controller
 		$object = new gradeModel();
 		$result = $object->index();
 		
+		unset($_SESSION['filter_subject_id']);
+		
         $this->controller->view()->render('pages/manage_grade/manage_grade.php', $result);
 	}
 

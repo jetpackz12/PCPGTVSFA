@@ -151,12 +151,6 @@
                                             </label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input check" type="checkbox" name="check[]" value="School Treasurer" id="check_cashier" checked>
-                                            <label class="form-check-label text-bold" for="check_cashier">
-                                                School Treasurer
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
                                             <input class="form-check-input check" type="checkbox" name="check[]" value="Other Signatory" id="other_signatory" checked>
                                             <label class="form-check-label text-bold" for="other_signatory">
                                                 Register Other Signatory
@@ -200,6 +194,20 @@
                                         <label class="form-check-label text-bold" for="check_fees_management">
                                             Fees Management
                                         </label>
+                                    </div>
+                                    <div class="d-flex flex-row gap-3 ms-5">
+                                        <div class="form-check">
+                                            <input class="form-check-input check" type="checkbox" name="check[]" value="Fees List" id="payable_list" checked>
+                                            <label class="form-check-label text-bold" for="payable_list">
+                                                Fees List
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input check" type="checkbox" name="check[]" value="School Treasurer" id="check_cashier" checked>
+                                            <label class="form-check-label text-bold" for="check_cashier">
+                                                School Treasurer
+                                            </label>
+                                        </div>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input check" type="checkbox" name="check[]" value="Role and Permission" id="check_role_and_permission" checked>
@@ -293,19 +301,13 @@
                                             </label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input check" type="checkbox" name="e_check[]" value="Subject Assignee" id="e_check_subject_assignee">
+                                            <input class="form-check-input e_check" type="checkbox" name="e_check[]" value="Subject Assignee" id="e_check_subject_assignee">
                                             <label class="form-check-label text-bold" for="e_check_subject_assignee">
                                                 Subject Assignee
                                             </label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input e_check" type="checkbox" name="e_check[]" value="School Treasurer" id="e_check_cashier">
-                                            <label class="form-check-label text-bold" for="e_check_cashier">
-                                                School Treasurer
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input check" type="checkbox" name="e_check[]" value="Other Signatory" id="e_other_signatory">
+                                            <input class="form-check-input e_check" type="checkbox" name="e_check[]" value="Other Signatory" id="e_other_signatory">
                                             <label class="form-check-label text-bold" for="e_other_signatory">
                                                 Register Other Signatory
                                             </label>
@@ -348,6 +350,20 @@
                                         <label class="form-check-label text-bold" for="e_check_fees_management">
                                             Fees Management
                                         </label>
+                                    </div>
+                                    <div class="d-flex flex-row gap-3 ms-5">
+                                        <div class="form-check">
+                                            <input class="form-check-input e_check" type="checkbox" name="e_check[]" value="Fees List" id="e_payable_list">
+                                            <label class="form-check-label text-bold" for="e_payable_list">
+                                                Fees List
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input e_check" type="checkbox" name="e_check[]" value="School Treasurer" id="e_check_cashier">
+                                            <label class="form-check-label text-bold" for="e_check_cashier">
+                                                School Treasurer
+                                            </label>
+                                        </div>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input e_check" type="checkbox" name="e_check[]" value="Role and Permission" id="e_check_role_and_permission">
@@ -471,6 +487,7 @@
                         $('#e_check_assign_subjects').prop('checked', false);
                         $('#e_check_subject_assignee').prop('checked', false);
                         $('#e_check_cashier').prop('checked', false);
+                        $('#e_payable_list').prop('checked', false);
                         $('#e_other_signatory').prop('checked', false);
                         $('#e_check_grade_section_and_subjects').prop('checked', false);
                         $('#e_check_grade').prop('checked', false);
@@ -512,6 +529,9 @@
                                 case 'School Treasurer':
                                     $('#e_check_cashier').prop('checked', true);
                                     break;
+                                case 'Fees List':
+                                    $('#e_payable_list').prop('checked', true);
+                                    break;
                                 case 'Other Signatory':
                                     $('#e_other_signatory').prop('checked', true);
                                     break;
@@ -546,19 +566,37 @@
                         if (!$('#e_check_advisory').prop('checked') && !$('#e_check_teacher').is(':checked')) {
                             $('#e_check_advisory').prop('disabled', true);
                             $('#e_check_teacher').prop('disabled', true);
+                        } else {
+                            $('#e_check_advisory').prop('disabled', false);
+                            $('#e_check_teacher').prop('disabled', false);
                         }
 
-                        if (!$('#e_check_assign_subjects').is(':checked') && !$('#e_check_subject_assignee').is(':checked') && !$('#e_check_cashier').is(':checked') && !$('#e_other_signatory').is(':checked')) {
+                        if (!$('#e_check_assign_subjects').is(':checked') && !$('#e_check_subject_assignee').is(':checked') && !$('#e_other_signatory').is(':checked')) {
                             $('#e_check_assign_subjects').prop('disabled', true);
                             $('#e_check_subject_assignee').prop('disabled', true);
-                            $('#e_check_cashier').prop('disabled', true);
                             $('#e_other_signatory').prop('disabled', true);
+                        } else {
+                            $('#e_check_assign_subjects').prop('disabled', false);
+                            $('#e_check_subject_assignee').prop('disabled', false);
+                            $('#e_other_signatory').prop('disabled', false);
                         }
 
                         if (!$('#e_check_grade').is(':checked') && !$('#e_check_section').is(':checked') && !$('#e_check_subjects').is(':checked')) {
                             $('#e_check_grade').prop('disabled', true);
                             $('#e_check_section').prop('disabled', true);
                             $('#e_check_subjects').prop('disabled', true);
+                        } else {
+                            $('#e_check_grade').prop('disabled', false);
+                            $('#e_check_section').prop('disabled', false);
+                            $('#e_check_subjects').prop('disabled', false);
+                        }
+
+                        if (!$('#e_payable_list').prop('checked') && !$('#e_check_cashier').is(':checked')) {
+                            $('#e_payable_list').prop('disabled', true);
+                            $('#e_check_cashier').prop('disabled', true);
+                        } else {
+                            $('#e_payable_list').prop('disabled', false);
+                            $('#e_check_cashier').prop('disabled', false);
                         }
 
                     }
@@ -610,18 +648,14 @@
                 $('#check_manage_faculty').on("change", () => {
                     if ($('#check_manage_faculty').is(':checked')) {
                         $('#check_assign_subjects').prop('disabled', false);
-                        $('#check_cashier').prop('disabled', false);
                         $('#check_assign_subjects').prop('checked', true);
-                        $('#check_cashier').prop('checked', true);
                         $('#check_subject_assignee').prop('disabled', false);
                         $('#check_subject_assignee').prop('checked', true);
                         $('#other_signatory').prop('disabled', false);
                         $('#other_signatory').prop('checked', true);
                     } else {
                         $('#check_assign_subjects').prop('disabled', true);
-                        $('#check_cashier').prop('disabled', true);
                         $('#check_assign_subjects').prop('checked', false);
-                        $('#check_cashier').prop('checked', false);
                         $('#check_subject_assignee').prop('disabled', true);
                         $('#check_subject_assignee').prop('checked', false);
                         $('#other_signatory').prop('disabled', true);
@@ -630,41 +664,28 @@
                 });
 
                 $('#check_assign_subjects').on("change", () => {
-                    if (!$('#check_assign_subjects').is(':checked') && !$('#check_subject_assignee').is(':checked') && !$('#check_cashier').is(':checked') && !$('#other_signatory').is(':checked')) {
+                    if (!$('#check_assign_subjects').is(':checked') && !$('#check_subject_assignee').is(':checked') && !$('#other_signatory').is(':checked')) {
                         $('#check_manage_faculty').prop('checked', false);
                         $('#check_assign_subjects').prop('disabled', true);
                         $('#check_subject_assignee').prop('disabled', true);
-                        $('#check_cashier').prop('disabled', true);
                         $('#other_signatory').prop('disabled', true);
                     }
                 });
 
                 $('#check_subject_assignee').on("change", () => {
-                    if (!$('#check_assign_subjects').is(':checked') && !$('#check_subject_assignee').is(':checked') && !$('#check_cashier').is(':checked') && !$('#other_signatory').is(':checked')) {
+                    if (!$('#check_assign_subjects').is(':checked') && !$('#check_subject_assignee').is(':checked') && !$('#other_signatory').is(':checked')) {
                         $('#check_manage_faculty').prop('checked', false);
                         $('#check_assign_subjects').prop('disabled', true);
                         $('#check_subject_assignee').prop('disabled', true);
-                        $('#check_cashier').prop('disabled', true);
-                        $('#other_signatory').prop('disabled', true);
-                    }
-                });
-
-                $('#check_cashier').on("change", () => {
-                    if (!$('#check_assign_subjects').is(':checked') && !$('#check_subject_assignee').is(':checked') && !$('#check_cashier').is(':checked') && !$('#other_signatory').is(':checked')) {
-                        $('#check_manage_faculty').prop('checked', false);
-                        $('#check_assign_subjects').prop('disabled', true);
-                        $('#check_subject_assignee').prop('disabled', true);
-                        $('#check_cashier').prop('disabled', true);
                         $('#other_signatory').prop('disabled', true);
                     }
                 });
 
                 $('#other_signatory').on("change", () => {
-                    if (!$('#check_assign_subjects').is(':checked') && !$('#check_subject_assignee').is(':checked') && !$('#check_cashier').is(':checked') && !$('#other_signatory').is(':checked')) {
+                    if (!$('#check_assign_subjects').is(':checked') && !$('#check_subject_assignee').is(':checked') && !$('#other_signatory').is(':checked')) {
                         $('#check_manage_faculty').prop('checked', false);
                         $('#check_assign_subjects').prop('disabled', true);
                         $('#check_subject_assignee').prop('disabled', true);
-                        $('#check_cashier').prop('disabled', true);
                         $('#other_signatory').prop('disabled', true);
                     }
                 });
@@ -713,6 +734,36 @@
                         $('#check_subjects').prop('disabled', true);
                     }
                 });
+
+                $('#check_fees_management').on("change", () => {
+                    if ($('#check_fees_management').is(':checked')) {
+                        $('#payable_list').prop('disabled', false);
+                        $('#check_cashier').prop('disabled', false);
+                        $('#payable_list').prop('checked', true);
+                        $('#check_cashier').prop('checked', true);
+                    } else {
+                        $('#payable_list').prop('disabled', true);
+                        $('#check_cashier').prop('disabled', true);
+                        $('#payable_list').prop('checked', false);
+                        $('#check_cashier').prop('checked', false);
+                    }
+                });
+
+                $('#payable_list').on("change", () => {
+                    if (!$('#payable_list').is(':checked') && !$('#check_cashier').is(':checked')) {
+                        $('#check_fees_management').prop('checked', false);
+                        $('#payable_list').prop('disabled', true);
+                        $('#check_cashier').prop('disabled', true);
+                    }
+                });
+
+                $('#check_cashier').on("change", () => {
+                    if (!$('#payable_list').is(':checked') && !$('#check_cashier').is(':checked')) {
+                        $('#check_fees_management').prop('checked', false);
+                        $('#payable_list').prop('disabled', true);
+                        $('#check_cashier').prop('disabled', true);
+                    }
+                });
             }
 
             const addEventForEditModal = () => {
@@ -750,50 +801,43 @@
                 $('#e_check_manage_faculty').on("change", () => {
                     if ($('#e_check_manage_faculty').is(':checked')) {
                         $('#e_check_assign_subjects').prop('disabled', false);
-                        $('#e_check_cashier').prop('disabled', false);
-                        $('#e_check_assign_subjects').prop('checked', true);
-                        $('#e_check_cashier').prop('checked', true);
                         $('#e_check_subject_assignee').prop('disabled', false);
-                        $('#e_check_subject_assignee').prop('checked', true);
                         $('#e_other_signatory').prop('disabled', false);
+                        $('#e_check_assign_subjects').prop('checked', true);
+                        $('#e_check_subject_assignee').prop('checked', true);
                         $('#e_other_signatory').prop('checked', true);
                     } else {
                         $('#e_check_assign_subjects').prop('disabled', true);
-                        $('#e_check_cashier').prop('disabled', true);
+                        $('#e_check_subject_assignee').prop('disabled', true);
+                        $('#e_other_signatory').prop('disabled', true);
                         $('#e_check_assign_subjects').prop('checked', false);
-                        $('#e_check_cashier').prop('checked', false);
-                        $('#e_check_subject_assignee').prop('disabled', false);
-                        $('#e_check_subject_assignee').prop('checked', true);
-                        $('#e_other_signatory').prop('disabled', false);
-                        $('#e_other_signatory').prop('checked', true);
+                        $('#e_check_subject_assignee').prop('checked', false);
+                        $('#e_other_signatory').prop('checked', false);
                     }
                 });
 
                 $('#e_check_assign_subjects').on("change", () => {
-                    if (!$('#e_check_assign_subjects').is(':checked')  && !$('#e_check_subject_assignee').is(':checked') && !$('#e_check_cashier').is(':checked') && !$('#e_other_signatory').is(':checked')) {
+                    if (!$('#e_check_assign_subjects').is(':checked') && !$('#e_check_subject_assignee').is(':checked') && !$('#e_other_signatory').is(':checked')) {
                         $('#e_check_manage_faculty').prop('checked', false);
                         $('#e_check_assign_subjects').prop('disabled', true);
-                        $('#e_check_cashier').prop('disabled', true);
                         $('#e_check_subject_assignee').prop('disabled', true);
                         $('#e_other_signatory').prop('disabled', true);
                     }
                 });
 
                 $('#e_check_subject_assignee').on("change", () => {
-                    if (!$('#e_check_assign_subjects').is(':checked')  && !$('#e_check_subject_assignee').is(':checked') && !$('#e_check_cashier').is(':checked') && !$('#e_other_signatory').is(':checked')) {
+                    if (!$('#e_check_assign_subjects').is(':checked') && !$('#e_check_subject_assignee').is(':checked') && !$('#e_other_signatory').is(':checked')) {
                         $('#e_check_manage_faculty').prop('checked', false);
                         $('#e_check_assign_subjects').prop('disabled', true);
-                        $('#e_check_cashier').prop('disabled', true);
                         $('#e_check_subject_assignee').prop('disabled', true);
                         $('#e_other_signatory').prop('disabled', true);
                     }
                 });
 
-                $('#e_check_cashier').on("change", () => {
-                    if (!$('#e_check_assign_subjects').is(':checked')  && !$('#e_check_subject_assignee').is(':checked') && !$('#e_check_cashier').is(':checked') && !$('#e_other_signatory').is(':checked')) {
+                $('#e_other_signatory').on("change", () => {
+                    if (!$('#e_check_assign_subjects').is(':checked') && !$('#e_check_subject_assignee').is(':checked') && !$('#e_other_signatory').is(':checked')) {
                         $('#e_check_manage_faculty').prop('checked', false);
                         $('#e_check_assign_subjects').prop('disabled', true);
-                        $('#e_check_cashier').prop('disabled', true);
                         $('#e_check_subject_assignee').prop('disabled', true);
                         $('#e_other_signatory').prop('disabled', true);
                     }
@@ -841,6 +885,36 @@
                         $('#e_check_grade').prop('disabled', true);
                         $('#e_check_section').prop('disabled', true);
                         $('#e_check_subjects').prop('disabled', true);
+                    }
+                });
+
+                $('#e_check_fees_management').on("change", () => {
+                    if ($('#e_check_fees_management').is(':checked')) {
+                        $('#e_payable_list').prop('disabled', false);
+                        $('#e_check_cashier').prop('disabled', false);
+                        $('#e_payable_list').prop('checked', true);
+                        $('#e_check_cashier').prop('checked', true);
+                    } else {
+                        $('#e_payable_list').prop('disabled', true);
+                        $('#e_check_cashier').prop('disabled', true);
+                        $('#e_payable_list').prop('checked', false);
+                        $('#e_check_cashier').prop('checked', false);
+                    }
+                });
+
+                $('#e_payable_list').on("change", () => {
+                    if (!$('#e_payable_list').is(':checked') && !$('#e_check_cashier').is(':checked')) {
+                        $('#e_check_fees_management').prop('checked', false);
+                        $('#e_payable_list').prop('disabled', true);
+                        $('#e_check_cashier').prop('disabled', true);
+                    }
+                });
+
+                $('#e_check_cashier').on("change", () => {
+                    if (!$('#e_payable_list').is(':checked') && !$('#e_check_cashier').is(':checked')) {
+                        $('#e_check_fees_management').prop('checked', false);
+                        $('#e_payable_list').prop('disabled', true);
+                        $('#e_check_cashier').prop('disabled', true);
                     }
                 });
             }

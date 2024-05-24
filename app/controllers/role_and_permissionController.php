@@ -32,6 +32,8 @@ class role_and_permissionController extends Controller
 		$object = new role_and_permissionModel();
 		$result = $object->index();
 		
+		unset($_SESSION['filter_subject_id']);
+		
         $this->controller->view()->render('pages/role_and_permission/role_and_permission.php', $result);
 	}
 

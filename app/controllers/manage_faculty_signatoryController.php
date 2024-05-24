@@ -32,6 +32,8 @@ class manage_faculty_signatoryController extends Controller
 		$object = new signatoryModel();
 		$teacher = $object->index();
 		
+		unset($_SESSION['filter_subject_id']);
+		
         $this->controller->view()->render('pages/manage_faculty/manage_faculty_signatory.php', $teacher);
 	}
 

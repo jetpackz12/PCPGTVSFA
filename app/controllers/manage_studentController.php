@@ -38,6 +38,8 @@ class manage_studentController extends Controller
 		$object = new subjectModel();
 		$subject = $object->index();
 		
+		unset($_SESSION['filter_subject_id']);
+		
         $this->controller->view()->render4('pages/manage_student/manage_student.php', $grade, $section, $student, $subject);
 	}
 

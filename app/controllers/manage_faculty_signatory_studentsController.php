@@ -20,8 +20,20 @@ class manage_faculty_signatory_studentsController extends Controller
 
         $object = new signatoryModel();
         $students = $object->get_students();
+        $object = new sectionModel();
+        $sections = $object->index();
+        $section_is_exist = array();
 
-        $this->controller->view()->render('pages/signatory/signatory.php', $students);
+        foreach ($sections as $section) {
+            foreach ($students as $student) {
+                if ($section['id'] == $student['section_id'] && $student['requirements_status'] == 1) {
+                    $section_is_exist[] = $section;
+                    break;
+                }
+            }
+        }
+
+        $this->controller->view()->render3('pages/signatory/signatory.php', $students, $sections, $section_is_exist);
     }
 
     public function store()
@@ -127,41 +139,80 @@ class manage_faculty_signatory_studentsController extends Controller
         }
     }
 
-    // public function chared_all()
-    // {
-    //     if (!isset($_SESSION['fname']) && !isset($_SESSION['mname']) && !isset($_SESSION['lname'])) {
-    //         $this->controller->view()->view_render('pages/login/login.php');
-    //         return;
-    //     }
-    //     $advisory_id = filter_input(INPUT_POST, "advisory_id", FILTER_SANITIZE_FULL_SPECIAL_CHARS) ?? null;
-    //     if (isset($advisory_id)) {
-    //         $object = new advisoryStudentsModel();
-    //         $result = $object->chared_all([
-    //             'advisory_id' => $advisory_id
-    //         ]);
+    public function store_per_grade()
+    {
+        if (!isset($_SESSION['fname']) && !isset($_SESSION['mname']) && !isset($_SESSION['lname'])) {
+            $this->controller->view()->view_render('pages/login/login.php');
+            return;
+        }
 
-    //         switch ($result['response']) {
-    //             case '1':
-    //                 echo json_encode([
-    //                     'response' => $result['response'],
-    //                     'message' => $result['message']
-    //                 ]);
-    //                 break;
+        $section = filter_input(INPUT_POST, "section", FILTER_SANITIZE_FULL_SPECIAL_CHARS) ?? null;
+        $requirements = filter_input(INPUT_POST, "requirements", FILTER_SANITIZE_FULL_SPECIAL_CHARS) ?? null;
+        if (isset($section) && isset($requirements)) {
+            $object = new signatoryModel();
+            $result = $object->store_per_grade([
+                'section' => $section,
+                'requirements' => $requirements,
+            ]);
 
-    //             default:
-    //                 echo json_encode([
-    //                     'response' => $result['response'],
-    //                     'message' => $result['message']
-    //                 ]);
-    //                 break;
-    //         }
-    //     } else {
-    //         echo json_encode([
-    //             'response' => '0',
-    //             'message' => "Failed, Please check inputted data."
-    //         ]);
-    //     }
-    // }
+            switch ($result['response']) {
+                case '1':
+                    echo json_encode([
+                        'response' => $result['response'],
+                        'message' => $result['message']
+                    ]);
+                    break;
+
+                default:
+                    echo json_encode([
+                        'response' => $result['response'],
+                        'message' => $result['message']
+                    ]);
+                    break;
+            }
+        } else {
+            echo json_encode([
+                'response' => '0',
+                'message' => "Failed, Please check inputted data."
+            ]);
+        }
+    }
+
+    public function chared_all()
+    {
+        if (!isset($_SESSION['fname']) && !isset($_SESSION['mname']) && !isset($_SESSION['lname'])) {
+            $this->controller->view()->view_render('pages/login/login.php');
+            return;
+        }
+        $section = filter_input(INPUT_POST, "section", FILTER_SANITIZE_FULL_SPECIAL_CHARS) ?? null;
+        if (isset($section)) {
+            $object = new signatoryModel();
+            $result = $object->student_chared_all([
+                'section' => $section
+            ]);
+
+            switch ($result['response']) {
+                case '1':
+                    echo json_encode([
+                        'response' => $result['response'],
+                        'message' => $result['message']
+                    ]);
+                    break;
+
+                default:
+                    echo json_encode([
+                        'response' => $result['response'],
+                        'message' => $result['message']
+                    ]);
+                    break;
+            }
+        } else {
+            echo json_encode([
+                'response' => '0',
+                'message' => "Failed, Please check inputted data."
+            ]);
+        }
+    }
 
     public function chared()
     {
@@ -202,43 +253,4 @@ class manage_faculty_signatory_studentsController extends Controller
             ]);
         }
     }
-
-    // public function update_requirements()
-    // {
-    //     if (!isset($_SESSION['fname']) && !isset($_SESSION['mname']) && !isset($_SESSION['lname'])) {
-    //         $this->controller->view()->view_render('pages/login/login.php');
-    //         return;
-    //     }
-
-    //     $advisory_id = filter_input(INPUT_POST, "advisory_id", FILTER_SANITIZE_FULL_SPECIAL_CHARS) ?? null;
-    //     $requirements = filter_input(INPUT_POST, "requirements", FILTER_SANITIZE_FULL_SPECIAL_CHARS) ?? null;
-    //     if (isset($advisory_id) && isset($requirements)) {
-    //         $object = new advisoryStudentsModel();
-    //         $result = $object->update_requirements([
-    //             'advisory_id' => $advisory_id,
-    //             'requirements' => $requirements,
-    //         ]);
-
-    //         switch ($result['response']) {
-    //             case '1':
-    //                 echo json_encode([
-    //                     'response' => $result['response'],
-    //                     'message' => $result['message']
-    //                 ]);
-    //                 break;
-
-    //             default:
-    //                 echo json_encode([
-    //                     'response' => $result['response'],
-    //                     'message' => $result['message']
-    //                 ]);
-    //                 break;
-    //         }
-    //     } else {
-    //         echo json_encode([
-    //             'response' => '0',
-    //             'message' => "Failed, Please check inputted data."
-    //         ]);
-    //     }
-    // }
 }

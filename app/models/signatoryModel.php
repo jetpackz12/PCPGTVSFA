@@ -211,7 +211,7 @@ class signatoryModel extends model
         $sql = "SELECT users.id AS user_id, requirements.id AS requirements_id, requirements.status AS requirements_status, sections.section, grades.grade, users.*, requirements.* FROM `users` 
         INNER JOIN sections ON sections.id = users.section_id
         INNER JOIN grades ON grades.id = sections.grade_id
-        LEFT JOIN requirements ON requirements.student_id = users.id AND requirements.added_from_id = '".$role_id."'
+        LEFT JOIN requirements ON requirements.student_id = users.id AND requirements.added_from_id = '" . $role_id . "'
         WHERE users.role_id = '2'";
         $result = $this->con->query($sql);
         if ($result->num_rows > 0) {
@@ -223,7 +223,7 @@ class signatoryModel extends model
         $this->con->close();
         return $data;
     }
-    
+
 
     public function student_store($param = array())
     {
@@ -235,14 +235,12 @@ class signatoryModel extends model
         $data = array();
 
         $sql = "INSERT INTO requirements (added_from_id, teacher_id, student_id, requirements, created_at) 
-        VALUES('".$added_from_id."','".$teacher_id."','".$student_id."','".$requirements."','".$created_at."')";
-        if($this->con->query($sql) === TRUE)
-        {
+        VALUES('" . $added_from_id . "','" . $teacher_id . "','" . $student_id . "','" . $requirements . "','" . $created_at . "')";
+        if ($this->con->query($sql) === TRUE) {
             $data = array(
                 'response' => '1',
                 'message' => "Success, You have successfully add student requirements."
             );
-
         } else {
             $data = array(
                 'response' => '0',
@@ -253,7 +251,7 @@ class signatoryModel extends model
         $this->con->close();
         return $data;
     }
-    
+
 
     public function student_chared($param = array())
     {
@@ -262,16 +260,13 @@ class signatoryModel extends model
         $data = array();
 
         $sql = "UPDATE requirements 
-        SET status = '".$status."', requirements = 'OK' WHERE id = '".$id."'";
-        if($this->con->query($sql) === TRUE)
-        {
+        SET status = '" . $status . "', requirements = 'OK' WHERE id = '" . $id . "'";
+        if ($this->con->query($sql) === TRUE) {
             $data = array(
                 'response' => '1',
                 'message' => "Success, You have successfully cleared this student."
             );
-        }
-        else
-        {
+        } else {
             $data = array(
                 'response' => '0',
                 'message' => "Failed, "  . $sql . "<br>" . $this->con->error
@@ -282,41 +277,37 @@ class signatoryModel extends model
         return $data;
     }
 
-	public function student_edit($param = array())
-	{
+    public function student_edit($param = array())
+    {
         $id = $param['id'];
         $data = array();
 
-        $sql = "SELECT * FROM requirements WHERE id = '".$id."'";
+        $sql = "SELECT * FROM requirements WHERE id = '" . $id . "'";
         $result = $this->con->query($sql);
-        if($result->num_rows > 0)
-        {
+        if ($result->num_rows > 0) {
             $data = $result->fetch_assoc();
         }
 
         $this->con->close();
         return $data;
-	}
+    }
 
-	public function student_update($param = array())
-	{
+    public function student_update($param = array())
+    {
         $id = $param['id'];
         $requirements = $param['requirements'];
         $data = array();
 
         $sql = "UPDATE requirements 
-                SET requirements = '".$requirements."'
-                WHERE id = '".$id."'";
+                SET requirements = '" . $requirements . "'
+                WHERE id = '" . $id . "'";
 
-        if($this->con->query($sql) === TRUE)
-        {
+        if ($this->con->query($sql) === TRUE) {
             $data = array(
                 'response' => '1',
                 'message' => "Success, You have successfully update this requirements."
             );
-        }
-        else
-        {
+        } else {
             $data = array(
                 'response' => '0',
                 'message' => "Failed, "  . $sql . "<br>" . $this->con->error
@@ -325,5 +316,91 @@ class signatoryModel extends model
 
         $this->con->close();
         return $data;
-	}
+    }
+
+
+    public function store_per_grade($param = array())
+    {
+        $added_from_id = $_SESSION['role_id'];
+        $teacher_id = $_SESSION['signatory_id'];
+        $section = $param['section'];
+        $requirements = $param['requirements'];
+        $created_at = date('Y-m-d H:i:s');
+        $added_status = false;
+        $data = array();
+
+        $sql = "SELECT users.id, requirements.status
+                FROM requirements
+                RIGHT JOIN users ON users.id = requirements.student_id
+                WHERE users.section_id = '" . $section . "'";
+        $result = $this->con->query($sql);
+        if ($result->num_rows > 0) {
+
+            while ($row = $result->fetch_assoc()) {
+                if ($row['status'] == null) {
+                    $sql = "INSERT INTO requirements (added_from_id, teacher_id, student_id, requirements, created_at) 
+                    VALUES('" . $added_from_id . "','" . $teacher_id . "','" . $row['id'] . "','" . $requirements . "','" . $created_at . "')";
+                    $this->con->query($sql);
+
+                    $added_status = true;
+                }
+            }
+
+        }
+
+        if ($added_status) {
+            $data = array(
+                'response' => '1',
+                'message' => "Success, You have successfully added requirements on this section."
+            );
+        } else {
+            $data = array(
+                'response' => '0',
+                'message' => "Failed, All students on this section is already added."
+            );
+        }
+
+        $this->con->close();
+        return $data;
+    }
+
+    public function student_chared_all($param = array())
+    {
+        $section = $param['section'];
+        $status = 0;
+        $update_status = false;
+        $data = array();
+
+        $sql = "SELECT users.id, requirements.status
+                FROM requirements
+                RIGHT JOIN users ON users.id = requirements.student_id
+                WHERE users.section_id = '" . $section . "'";
+        $result = $this->con->query($sql);
+        if ($result->num_rows > 0) {
+
+            while ($row = $result->fetch_assoc()) {
+                $sql = "UPDATE requirements 
+                SET status = '" . $status . "', requirements = 'OK' WHERE student_id = '" . $row['id'] . "'";
+                $this->con->query($sql);
+
+                $update_status = true;
+            }
+
+        }
+
+        if ($update_status) {
+            $data = array(
+                'response' => '1',
+                'message' => "Success, You have successfully cleared all student in this section."
+            );
+        } else {
+            $data = array(
+                'response' => '0',
+                'message' => "Failed, All students on this section is already cleared."
+            );
+        }
+
+        $this->con->close();
+        return $data;
+    }
 }

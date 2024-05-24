@@ -252,8 +252,8 @@
         </div>
 
         <script>
-            const collapseFaculty = document.querySelectorAll("#collapseFaculty");
-            collapseFaculty.forEach((node) => {
+            const collapseFeesManagement = document.querySelectorAll("#collapseFeesManagement");
+            collapseFeesManagement.forEach((node) => {
                 node.classList.add("show")
             });
             const sidebarName = document.querySelectorAll(".manage_faculty_cashier");

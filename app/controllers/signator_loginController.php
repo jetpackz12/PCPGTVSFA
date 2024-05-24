@@ -17,10 +17,20 @@ class signator_loginController extends Controller
 
 			$object = new signatoryModel();
 			$students = $object->get_students();
+			$object = new sectionModel();
+			$sections = $object->index();
+			$section_is_exist = array();
 
-			// die(json_encode($students));
+			foreach ($sections as $section) {
+				foreach ($students as $student) {
+					if ($section['id'] == $student['section_id'] && $student['requirements_status'] == 1) {
+						$section_is_exist[] = $section;
+						break;
+					}
+				}
+			}
 
-			$this->controller->view()->render('pages/signatory/signatory.php', $students);
+			$this->controller->view()->render3('pages/signatory/signatory.php', $students, $sections, $section_is_exist);
 			return;
 		}
 

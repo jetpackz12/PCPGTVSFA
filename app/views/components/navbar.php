@@ -94,13 +94,8 @@
                                         Subject Assignee
                                     </a>
                                 <?php } ?>
-                                <?php if (in_array("School Treasurer", $arr_multi_role)) { ?>
-                                    <a class="text-black text-decoration-none rounded-2 border border-black d-flex align-items-center justify-content-center list-group-item list-group-item-action manage_faculty_cashier" href="<?php echo ROOT; ?>manage_faculty_cashier" style="height: 60px;">
-                                        School Treasurer
-                                    </a>
-                                <?php } ?>
-                                <?php if(in_array("Other Signatory", $arr_multi_role)) { ?>
-                                    <a class="text-black text-decoration-none rounded-2 border border-black d-flex align-items-center justify-content-center list-group-item list-group-item-action manage_faculty_signatory" href="<?php echo ROOT;?>manage_faculty_signatory" style="height: 60px;">
+                                <?php if (in_array("Other Signatory", $arr_multi_role)) { ?>
+                                    <a class="text-black text-decoration-none rounded-2 border border-black d-flex align-items-center justify-content-center list-group-item list-group-item-action manage_faculty_signatory" href="<?php echo ROOT; ?>manage_faculty_signatory" style="height: 60px;">
                                         Register Other Signatory
                                     </a>
                                 <?php } ?>
@@ -147,10 +142,30 @@
                 </a>
             <?php } ?>
             <?php if (in_array("Fees Management", $arr_multi_role)) { ?>
-                <a class="text-black text-decoration-none rounded-2 d-flex align-items-center gap-1 list-group-item list-group-item-action fees_management" href="<?php echo ROOT; ?>fees_management" style="height: 60px;">
-                    <i class="fa fa-money-bill"></i>
-                    Fees Management
-                </a>
+                <div class="accordion mb-2" id="accordionFeesManagement">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" style="height: 60px;">
+                            <button class="accordion-button gap-1 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFeesManagement" aria-expanded="false" aria-controls="collapseFeesManagement">
+                                <i class="fa fa-money-bill"></i>
+                                Fees Management
+                            </button>
+                        </h2>
+                        <div id="collapseFeesManagement" class="accordion-collapse collapse" data-bs-parent="#accordionFeesManagement">
+                            <div class="accordion-body d-flex flex-column gap-2 pt-4">
+                                <?php if (in_array("Fees List", $arr_multi_role)) { ?>
+                                    <a class="text-black text-decoration-none rounded-2 border border-black d-flex align-items-center justify-content-center list-group-item list-group-item-action fees_management" href="<?php echo ROOT; ?>fees_management" style="height: 60px;">
+                                        Fees List
+                                    </a>
+                                <?php } ?>
+                                <?php if (in_array("School Treasurer", $arr_multi_role)) { ?>
+                                    <a class="text-black text-decoration-none rounded-2 border border-black d-flex align-items-center justify-content-center list-group-item list-group-item-action manage_faculty_cashier" href="<?php echo ROOT; ?>manage_faculty_cashier" style="height: 60px;">
+                                        School Treasurer
+                                    </a>
+                                <?php } ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             <?php } ?>
             <?php if (in_array("Role and Permission", $arr_multi_role)) { ?>
                 <a class="text-black text-decoration-none rounded-2 d-flex align-items-center gap-1 list-group-item list-group-item-action role_and_permission" href="<?php echo ROOT; ?>role_and_permission" style="height: 60px;">

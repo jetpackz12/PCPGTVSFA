@@ -35,6 +35,8 @@ class manage_sectionController extends Controller
 		$object = new sectionModel();
 		$section = $object->index();
 		
+		unset($_SESSION['filter_subject_id']);
+		
         $this->controller->view()->render2('pages/manage_section/manage_section.php', $grade, $section);
 	}
 

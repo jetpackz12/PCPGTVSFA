@@ -41,6 +41,8 @@ class homeController extends Controller
 		$total_not_cleared = $object->total_not_cleared();
 		$object = new homeModel();
 		$total_cleared = $object->total_cleared();
+		
+		unset($_SESSION['filter_subject_id']);
 
         $this->controller->view()->render6('pages/home/home.php', $enrollees, $total_student, $total_teacher, $total_adviser, $total_not_cleared, $total_cleared);
 	}
