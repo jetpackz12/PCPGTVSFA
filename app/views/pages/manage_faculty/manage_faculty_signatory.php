@@ -11,7 +11,7 @@
                 <div class="col-12 col-md-9 col-xl-10">
                     <div class="row mt-3 gap-3">
                         <div class="col-12">
-                            <h3 class="d-inline">Teacher List</h3>
+                            <h3 class="d-inline">Signatory List</h3>
                             <button class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#addModal">
                                 <i class="fa fa-plus-circle"></i>
                                 Add New
@@ -95,9 +95,9 @@
             <div class="modal-dialog modal-xl modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="addModalLabel">Add New Teacher</h1>
+                        <h1 class="modal-title fs-5" id="addModalLabel">Add Signatory</h1>
                     </div>
-                    <form class="addForm" method="POST" action="<?php echo ROOT; ?>manage_teacher/store">
+                    <form class="addForm" method="POST" action="<?php echo ROOT; ?>manage_faculty_signatory/store">
                         <div class="modal-body">
                             <div class="row gap-3 gap-md-0">
                                 <div class="col-12 col-md-6 d-flex justify-content-center align-items-center flex-column">
@@ -117,6 +117,14 @@
                                         <canvas class="border border-1 border-black w-100 h-100" id="signature_pad" width="550" height="400"></canvas>
                                         <input class="form-control" type="text" name="sign_name" id="sign_name" readonly hidden>
                                     </div>
+                                </div>
+                            </div>
+                            <div class="row mt-3 gap-3 gap-md-0">
+                                <div class="col-12 input-group">
+                                    <span class="input-group-text" style="width: 30%;">
+                                        Signatory:
+                                    </span>
+                                    <input class="form-control" type="text" name="sig_name" id="sig_name" placeholder="Please enter signatory name Ex: librarian" required>
                                 </div>
                             </div>
                             <div class="row mt-3 gap-3 gap-md-0">
@@ -218,7 +226,7 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header bg-primary">
-                        <h1 class="modal-title fs-5" id="viewModalLabel">View Teacher</h1>
+                        <h1 class="modal-title fs-5" id="viewModalLabel">View Signatory</h1>
                     </div>
                     <div class="modal-body">
                         <div class="row gap-3">
@@ -246,11 +254,12 @@
             <div class="modal-dialog modal-xl modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header bg-warning">
-                        <h1 class="modal-title fs-5" id="editModalLabel">Edit Teacher</h1>
+                        <h1 class="modal-title fs-5" id="editModalLabel">Edit Signatory</h1>
                     </div>
-                    <form class="updateForm" method="POST" action="<?php echo ROOT; ?>manage_teacher/update">
+                    <form class="updateForm" method="POST" action="<?php echo ROOT; ?>manage_faculty_signatory/update">
                         <div class="modal-body">
                             <input class="form-control id" type="text" name="id" readonly hidden>
+                            <input class="form-control role_id" type="text" name="role_id" readonly hidden>
                             <div class="row gap-3 gap-md-0">
                                 <div class="col-6 d-flex justify-content-center align-items-center flex-column">
                                     <h4>Picture</h4>
@@ -270,6 +279,14 @@
                                     <div class="w-100 h-100 d-none" id="e_div_signature_pad">
                                         <canvas class="border border-1 border-black w-100 h-100" id="e_signature_pad" width="550" height="400"></canvas>
                                     </div>
+                                </div>
+                            </div>
+                            <div class="row mt-3 gap-3 gap-md-0">
+                                <div class="col-12 input-group">
+                                    <span class="input-group-text" style="width: 30%;">
+                                        Signatory:
+                                    </span>
+                                    <input class="form-control" type="text" name="e_sig_name" id="e_sig_name" placeholder="Please enter signatory name Ex: librarian" required>
                                 </div>
                             </div>
                             <div class="row mt-3 gap-3 gap-md-0">
@@ -341,7 +358,7 @@
                                     <span class="input-group-text" style="width: 42%;">
                                         Username:
                                     </span>
-                                    <input class="form-control" type="text" name="e_username" id="e_username" placeholder="Please enter username." readonly required>
+                                    <input class="form-control" type="text" name="e_username" id="e_username" placeholder="Please enter username." required>
                                 </div>
                                 <div class="col-12 col-md-4 input-group">
                                     <input class="form-control" type="password" name="e_password_old" id="e_password_old" readonly hidden>
@@ -384,13 +401,13 @@
             <div class="modal-dialog modal-sm modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header bg-danger">
-                        <h1 class="modal-title fs-5" id="deleteModalLabel">Edit Teacher Status</h1>
+                        <h1 class="modal-title fs-5" id="deleteModalLabel">Edit Signatory Status</h1>
                     </div>
-                    <form class="deleteForm" method="POST" action="<?php echo ROOT; ?>manage_teacher/delete">
+                    <form class="deleteForm" method="POST" action="<?php echo ROOT; ?>manage_faculty_signatory/delete">
                         <div class="modal-body">
                             <input class="form-control id" type="text" name="id" readonly hidden>
                             <input class="form-control" type="text" name="status" id="status" readonly hidden>
-                            <p>Are you sure you want to edit this teacher status?</p>
+                            <p>Are you sure you want to edit this signatory status?</p>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
@@ -402,11 +419,11 @@
         </div>
 
         <script>
-            const collapseAdvisoryTeacher = document.querySelectorAll("#collapseAdvisoryTeacher");
+            const collapseAdvisoryTeacher = document.querySelectorAll("#collapseFaculty");
             collapseAdvisoryTeacher.forEach((node) => {
                 node.classList.add("show")
             });
-            const sidebarName = document.querySelectorAll(".manage_teacher");
+            const sidebarName = document.querySelectorAll(".manage_faculty_signatory");
             sidebarName.forEach((node) => {
                 node.classList.add("active")
             });
@@ -627,7 +644,7 @@
             });
 
             $('.edit_button').on('click', function() {
-                const path = '<?php echo ROOT; ?>manage_teacher/edit';
+                const path = '<?php echo ROOT; ?>manage_faculty_signatory/edit';
                 const id = $(this).attr('data-id');
                 $.ajax({
                     type: "POST",
@@ -638,7 +655,7 @@
                     },
                     success: function(data) {
 
-                        // console.log(data);
+                        console.log(data);
                         const json = JSON.parse(data);
 
                         // View Modal
@@ -668,6 +685,8 @@
                         $('#e_password').val(json['password']);
                         $('#e_confirm_password').val(json['password']);
                         $('#status').val(json['status']);
+                        $('#e_sig_name').val(json['added_from']);
+                        $('.role_id').val(json['role_id']);
                         pass = json['password'];
 
 
@@ -677,6 +696,7 @@
                         $('#e_confirm_password_cancel').addClass('d-none');
                         $('#e_password_button').removeClass('d-none');
                         $('#e_confirm_password_button').removeClass('d-none');
+
 
                     }
                 });

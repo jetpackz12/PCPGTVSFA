@@ -35,6 +35,8 @@ class manage_subjectController extends Controller
 		$object = new subjectModel();
 		$subject = $object->index();
 		
+		unset($_SESSION['filter_subject_id']);
+		
         $this->controller->view()->render2('pages/manage_subject/manage_subject.php', $section, $subject);
 	}
 

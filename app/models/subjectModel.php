@@ -12,7 +12,7 @@ class subjectModel extends model
     public function index() {
         $data = array();
 
-        $sql = "SELECT subjects.id, subjects.section_id, grades.id AS grade_id, grades.grade, grades.status, sections.section, subjects.subject 
+        $sql = "SELECT subjects.id, subjects.section_id, grades.id AS grade_id, grades.grade, grades.status, sections.section, subjects.subject, subjects.is_assign 
                 FROM subjects
                 INNER JOIN sections ON sections.id = subjects.section_id
                 INNER JOIN grades ON grades.id = sections.grade_id";

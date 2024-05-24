@@ -101,7 +101,7 @@ class cashierStudentModel extends model
         {
             $data = array(
                 'response' => '1',
-                'message' => "Success, You have successfully chared this student."
+                'message' => "Success, You have successfully cleared this student."
             );
         }
         else

@@ -34,6 +34,8 @@ class manage_user_accountController extends Controller
 
 		$object = new role_and_permissionModel();
 		$role = $object->index();
+		
+		unset($_SESSION['filter_subject_id']);
 
         $this->controller->view()->render2('pages/manage_user_account/manage_user_account.php', $result, $role);
 	}

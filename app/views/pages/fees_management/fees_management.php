@@ -11,7 +11,7 @@
                 <div class="col-12 col-md-9 col-xl-10">
                     <div class="row mt-3 gap-3">
                         <div class="col-12">
-                            <h3 class="d-inline">Fees <span class="d-none d-md-inline">Management</span> List</h3>
+                            <h3 class="d-inline">Fees List</h3>
                             <button class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#addModal">
                                 <i class="fa fa-plus-circle"></i>
                                 Add New
@@ -196,6 +196,10 @@
         </div>
 
         <script>
+            const collapseFeesManagement = document.querySelectorAll("#collapseFeesManagement");
+            collapseFeesManagement.forEach((node) => {
+                node.classList.add("show")
+            });
             const sidebarName = document.querySelectorAll(".fees_management");
             sidebarName.forEach((node) => {
                 node.classList.add("active")

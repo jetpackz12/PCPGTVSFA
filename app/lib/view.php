@@ -41,6 +41,14 @@ class view{
 		require PATH_VIEW.$url;
 	}
 
+	public function render_data5($url, $data = array(), $data2, $data3 = array(), $data4, $data5, $data6){
+		require PATH_VIEW.$url;
+	}
+
+	public function render_data6($url, $data = array(), $data2, $data3 = array(), $data4, $data5, $data6, $data7){
+		require PATH_VIEW.$url;
+	}
+
 	public function view_render($url)
 	{
 		require PATH_VIEW.$url;

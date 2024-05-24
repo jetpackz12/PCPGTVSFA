@@ -32,6 +32,8 @@ class system_settingsController extends Controller
 		$object = new settingModel();
 		$result = $object->index();
 		
+		unset($_SESSION['filter_subject_id']);
+		
         $this->controller->view()->render('pages/system_settings/system_settings.php', $result);
 	}
 

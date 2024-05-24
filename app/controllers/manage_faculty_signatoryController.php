@@ -3,7 +3,7 @@
 /**
  * 
  */
-class manage_studentController extends Controller
+class manage_faculty_signatoryController extends Controller
 {
 	private $controller;
 	function __construct()
@@ -22,25 +22,19 @@ class manage_studentController extends Controller
 		if(isset($_SESSION['multi_role']))
 		{
 			$arr_multi_role = explode(",",$_SESSION['multi_role']['permission']);
-			if(!in_array("Manage Student", $arr_multi_role))
+			if(!in_array("Teacher", $arr_multi_role))
 			{
 				$this->controller->view()->view_render('pages/error_message/error_message.php');
 				return;
 			}
 		}
 		
-		$object = new gradeModel();
-		$grade = $object->index();
-		$object = new sectionModel();
-		$section = $object->index();
-		$object = new userModel();
-		$student = $object->index_student();
-		$object = new subjectModel();
-		$subject = $object->index();
+		$object = new signatoryModel();
+		$teacher = $object->index();
 		
 		unset($_SESSION['filter_subject_id']);
 		
-        $this->controller->view()->render4('pages/manage_student/manage_student.php', $grade, $section, $student, $subject);
+        $this->controller->view()->render('pages/manage_faculty/manage_faculty_signatory.php', $teacher);
 	}
 
 	public function store()
@@ -52,8 +46,6 @@ class manage_studentController extends Controller
 		}
 
 		$image_file_name = filter_input(INPUT_POST, "image_file_name", FILTER_SANITIZE_FULL_SPECIAL_CHARS) ?? null;
-		$grade = filter_input(INPUT_POST, "grade", FILTER_SANITIZE_FULL_SPECIAL_CHARS) ?? null;
-		$check_list = $_POST['check_list'] ?? null;
 		$firstname = filter_input(INPUT_POST, "firstname", FILTER_SANITIZE_FULL_SPECIAL_CHARS) ?? null;
 		$middlename = filter_input(INPUT_POST, "middlename", FILTER_SANITIZE_FULL_SPECIAL_CHARS) ?? null;
 		$lastname = filter_input(INPUT_POST, "lastname", FILTER_SANITIZE_FULL_SPECIAL_CHARS) ?? null;
@@ -66,15 +58,7 @@ class manage_studentController extends Controller
 		$username = filter_input(INPUT_POST, "username", FILTER_SANITIZE_FULL_SPECIAL_CHARS) ?? null;
 		$password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_FULL_SPECIAL_CHARS) ?? null;
 		$confirm_password = filter_input(INPUT_POST, "confirm_password", FILTER_SANITIZE_FULL_SPECIAL_CHARS) ?? null;
-
-		if($check_list == null)
-		{
-			echo json_encode([
-				'response' => '0',
-				'message' => "Failed, Please select student subjects."
-			]);
-			return;
-		}
+		$sig_name = filter_input(INPUT_POST, "sig_name", FILTER_SANITIZE_FULL_SPECIAL_CHARS) ?? null;
 
 		if(strlen($phonenumber) != 11 || substr($phonenumber, 0, 1) != 0)
 		{
@@ -94,15 +78,14 @@ class manage_studentController extends Controller
 			return;
 		}
 
-		if(isset($image_file_name) && isset($grade) && isset($firstname) && isset($middlename) && isset($lastname)
-			&& isset($gender) && isset($birthdate) && isset($phonenumber) && isset($province) && isset($municipality)
-			&& isset($village_street) && isset($username) && isset($password))
+		if(isset($image_file_name) && isset($firstname) && isset($middlename) 
+		&& isset($lastname) && isset($gender) && isset($birthdate) && isset($phonenumber) 
+		&& isset($province) && isset($municipality) && isset($village_street) && isset($username) 
+		&& isset($password) && isset($sig_name))
 		{
-			$object = new userModel();
-			$result = $object->store_student([
+			$object = new signatoryModel();
+			$result = $object->store([
 				'image_file_name' => $image_file_name,
-				'check_list'=>implode(",",$check_list),
-				'grade' => $grade,
 				'firstname' => $firstname,
 				'middlename' => $middlename,
 				'lastname' => $lastname,
@@ -114,6 +97,7 @@ class manage_studentController extends Controller
 				'village_street' => $village_street,
 				'username' => $username,
 				'password' => password_hash($password, PASSWORD_BCRYPT),
+				'sig_name' => $sig_name,
 			]);
 
 			switch ($result['response']) {
@@ -153,13 +137,16 @@ class manage_studentController extends Controller
 		$id = filter_input(INPUT_POST, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS) ?? null;
 		if(isset($id))
 		{
-			$object = new userModel();
-			$result = $object->edit_student(['id' => $id]);
+			$object = new signatoryModel();
+			$result = $object->edit(['id' => $id]);
 			
 			if(isset($result))
 			{
 				$date=date_create($result['birthdate']);
+				$arr_image_path = explode('/',$result['image_path']);
+				$image_name = $arr_image_path[2];
 				$result['birthdate_format'] = date_format($date,"M. d, Y");
+				$result['image_name'] = $image_name;
 				echo json_encode($result);
 			}
 		}
@@ -182,8 +169,6 @@ class manage_studentController extends Controller
 
 		$id = filter_input(INPUT_POST, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS) ?? null;
 		$image_file_name = filter_input(INPUT_POST, "e_image_file_name", FILTER_SANITIZE_FULL_SPECIAL_CHARS) ?? null;
-		$grade = filter_input(INPUT_POST, "e_grade", FILTER_SANITIZE_FULL_SPECIAL_CHARS) ?? null;
-		$check_list = $_POST['e_check_list'] ?? null;
 		$firstname = filter_input(INPUT_POST, "e_firstname", FILTER_SANITIZE_FULL_SPECIAL_CHARS) ?? null;
 		$middlename = filter_input(INPUT_POST, "e_middlename", FILTER_SANITIZE_FULL_SPECIAL_CHARS) ?? null;
 		$lastname = filter_input(INPUT_POST, "e_lastname", FILTER_SANITIZE_FULL_SPECIAL_CHARS) ?? null;
@@ -197,15 +182,8 @@ class manage_studentController extends Controller
 		$password_old = filter_input(INPUT_POST, "e_password_old", FILTER_SANITIZE_FULL_SPECIAL_CHARS) ?? null;
 		$password = filter_input(INPUT_POST, "e_password", FILTER_SANITIZE_FULL_SPECIAL_CHARS) ?? null;
 		$confirm_password = filter_input(INPUT_POST, "e_confirm_password", FILTER_SANITIZE_FULL_SPECIAL_CHARS) ?? null;
-
-		if($check_list == null)
-		{
-			echo json_encode([
-				'response' => '0',
-				'message' => "Failed, Please select student subjects."
-			]);
-			return;
-		}
+		$sig_name = filter_input(INPUT_POST, "e_sig_name", FILTER_SANITIZE_FULL_SPECIAL_CHARS) ?? null;
+		$role_id = filter_input(INPUT_POST, "role_id", FILTER_SANITIZE_FULL_SPECIAL_CHARS) ?? null;
 
 		if(strlen($phonenumber) != 11 || substr($phonenumber, 0, 1) != 0)
 		{
@@ -225,9 +203,10 @@ class manage_studentController extends Controller
 			return;
 		}
 
-		if(isset($id) && isset($image_file_name) && isset($grade) && isset($firstname) && isset($middlename) 
-			&& isset($lastname) && isset($gender) && isset($birthdate) && isset($phonenumber) && isset($province)
-			&& isset($municipality) && isset($village_street) && isset($username) && isset($password))
+		if(isset($id) && isset($image_file_name) && isset($firstname) && isset($middlename) 
+		&& isset($lastname) && isset($gender) && isset($birthdate) && isset($phonenumber) 
+		&& isset($province) && isset($municipality) && isset($village_street) && isset($username) 
+		&& isset($password) && isset($sig_name) && isset($role_id))
 		{
 			$hash_password = $password_old;
 			if(!password_verify($password, $password_old))
@@ -235,12 +214,10 @@ class manage_studentController extends Controller
 				$hash_password = password_hash($password, PASSWORD_BCRYPT);
             }
 
-			$object = new userModel();
-			$result = $object->update_student([
+			$object = new signatoryModel();
+			$result = $object->update([
 				'id' => $id,
 				'image_file_name' => $image_file_name,
-				'check_list'=>implode(",",$check_list),
-				'grade' => $grade,
 				'firstname' => $firstname,
 				'middlename' => $middlename,
 				'lastname' => $lastname,
@@ -252,6 +229,8 @@ class manage_studentController extends Controller
 				'village_street' => $village_street,
 				'username' => $username,
 				'password' => $hash_password,
+				'sig_name' => $sig_name,
+				'role_id' => $role_id,
 			]);
 
 			switch ($result['response']) {
@@ -281,7 +260,6 @@ class manage_studentController extends Controller
 
 	public function delete()
 	{
-
 		if(!isset($_SESSION['fname']) && !isset($_SESSION['mname']) && !isset($_SESSION['lname']))
 		{
 			$this->controller->view()->view_render('pages/login/login.php');
@@ -289,11 +267,13 @@ class manage_studentController extends Controller
 		}
 
 		$id = filter_input(INPUT_POST, "id", FILTER_SANITIZE_FULL_SPECIAL_CHARS) ?? null;
-		if(isset($id))
+		$status = filter_input(INPUT_POST, "status", FILTER_SANITIZE_FULL_SPECIAL_CHARS) ?? null;
+		if(isset($id) && isset($status))
 		{
-			$object = new userModel();
-			$result = $object->delete_student([
+			$object = new signatoryModel();
+			$result = $object->delete([
 				'id' => $id,
+				'status' => $status
 			]);
 
 			switch ($result['response']) {
@@ -320,41 +300,6 @@ class manage_studentController extends Controller
 			]);
 		}
 	}
-
-	public function show_subjects()
-	{
-		$section_id = filter_input(INPUT_POST, "section_id", FILTER_SANITIZE_FULL_SPECIAL_CHARS) ?? null;
-		if(isset($section_id))
-		{
-			$object = new userModel();
-			$result = $object->show_subjects([
-				'section_id' => $section_id
-			]);
-
-			if(isset($result))
-			{
-				echo json_encode([
-					'response' => '1',
-					'message' => $result
-				]);
-			}
-			else
-			{
-				echo json_encode([
-					'response' => '0',
-					'message' => "Failed, Can't Retrieve Subjects Data."
-				]);
-			}
-		}
-		else
-		{
-			echo json_encode([
-				'response' => '0',
-				'message' => "Failed, Can't Retrieve Subjects Data."
-			]);
-		}
-	}
-	
 
 }
 ?>

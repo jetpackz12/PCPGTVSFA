@@ -99,6 +99,8 @@ class settingModel extends model
             $this->con->query($sql);
             $sql = "DELETE FROM payables";
             $this->con->query($sql);
+            $sql = "UPDATE subjects SET is_assign = 0 WHERE is_assign = 1";
+            $this->con->query($sql);
 
             $data = array(
                 'response' => '1',

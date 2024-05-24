@@ -22,7 +22,7 @@ class manage_faculty_cashierController extends Controller
 		if(isset($_SESSION['multi_role']))
 		{
 			$arr_multi_role = explode(",",$_SESSION['multi_role']['permission']);
-			if(!in_array("Cashier", $arr_multi_role))
+			if(!in_array("School Treasurer", $arr_multi_role))
 			{
 				$this->controller->view()->view_render('pages/error_message/error_message.php');
 				return;
@@ -37,6 +37,8 @@ class manage_faculty_cashierController extends Controller
 		
 		$object = new cashierModel();
 		$payable = $object->index();
+		
+		unset($_SESSION['filter_subject_id']);
 
         $this->controller->view()->render3('pages/manage_faculty_cashier/manage_faculty_cashier.php', $fees, $grade, $payable);
 	}

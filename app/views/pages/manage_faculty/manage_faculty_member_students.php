@@ -1,8 +1,8 @@
-<?php include PATH_VIEW."/components/header.php"; ?>
+<?php include PATH_VIEW . "/components/header.php"; ?>
 
 <body>
-<?php include PATH_VIEW."/components/navbar.php"; ?>
-     <main>
+    <?php include PATH_VIEW . "/components/navbar.php"; ?>
+    <main>
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
@@ -10,18 +10,16 @@
                         <div class="col-12 d-flex justify-content-between">
                             <h3 class="d-inline">
                                 <?php
-                                    if(isset($_SESSION['multi_role']))
-                                    {
-                                        $arr_multi_role = explode(",",$_SESSION['multi_role']['permission']);
-                                        if(in_array("Assign Subjects", $arr_multi_role))
-                                        {
+                                if (isset($_SESSION['multi_role'])) {
+                                    $arr_multi_role = explode(",", $_SESSION['multi_role']['permission']);
+                                    if (in_array("Assign Subjects", $arr_multi_role)) {
                                 ?>
-                                            <a class="btn btn-primary" href="<?php echo ROOT;?>manage_faculty" style="width: 80px; height: 45px;">
-                                                <i class="fa fa-reply"></i>
-                                            </a>
+                                        <a class="btn btn-primary" href="<?php echo ROOT; ?>manage_faculty" style="width: 80px; height: 45px;">
+                                            <i class="fa fa-reply"></i>
+                                        </a>
                                 <?php
-                                        }
                                     }
+                                }
                                 ?>
                                 <p class="d-none d-md-inline">Faculty Member Student List</p>
                             </h3>
@@ -32,112 +30,137 @@
                         </div>
                         <div class="col-12">
                             <div class="card">
-                              <div class="card-body">  
-                                <?php if(count($data3) > 0) { ?>
-                                <div class="row mb-2 gap-2">
-                                    <form class="postForm d-flex p-0" method="POST" action="<?php echo ROOT;?>manage_faculty_member_students/chared_all">
-                                    <input class="form-control" type="text" name="faculty_id" value="<?php echo $data4?>" readonly hidden>
-                                        <div class="col-12 col-md-4">
-                                            <div class="input-group">
-                                                <span class="input-group-text w-25">
-                                                    Subject:
-                                                </span>
-                                                <select class="form-control" name="subject_filter" id="subject_filter">
-                                                    <option value="" selected disabled>Please select subject for multiple charing.</option>
-                                                    <?php 
-                                                        $arr_subjects = explode(",", $data2);
+                                <div class="card-body">
+                                    <?php if (count($data3) > 0) { ?>
+                                        <div class="row mb-2 gap-2">
+                                            <form class="postForm d-flex p-0" method="POST" action="<?php echo ROOT; ?>manage_faculty_member_students/chared_all">
+                                                <input class="form-control" type="text" name="faculty_id" value="<?php echo $data4 ?>" readonly hidden>
+                                                <div class="col-12 col-md-4">
+                                                    <div class="input-group">
+                                                        <span class="input-group-text w-25">
+                                                            Subject:
+                                                        </span>
+                                                        <select class="form-control" name="subject_filter" id="subject_filter">
+                                                            <option value="" selected disabled>Please select subject for multiple charing.</option>
+                                                            <?php
+                                                            $arr_subjects = explode(",", $data2);
 
-                                                        foreach($data as $result) { 
-                                                            if($result['status'] == 1 && in_array($result['id'], $arr_subjects))
-                                                            {
-                                                                echo '<option value="'.$result['id'].'">'.'Gr. '.$result['grade'] . ' ( ' . $result['section'] .' -'.$result['subject'].' )'.'</option>';
+                                                            foreach ($data as $result) {
+                                                                if ($result['status'] == 1 && in_array($result['id'], $arr_subjects)) {
+                                                                    echo '<option value="' . $result['id'] . '">' . 'Gr. ' . $result['grade'] . ' ( ' . $result['section'] . ' -' . $result['subject'] . ' )' . '</option>';
+                                                                }
                                                             }
-                                                        }
-                                                    ?>
-                                                    <option value="All">All Subjects</option>
-                                                </select>
-                                            </div>
+                                                            ?>
+                                                            <option value="All">All Subjects</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-md-2">
+                                                    <button type="submit" class="btn btn-primary w-100">
+                                                        <i class="fa fa-signature"></i>
+                                                        Cleared All
+                                                    </button>
+                                                </div>
+                                            </form>
                                         </div>
-                                        <div class="col-12 col-md-2">    
-                                            <button type="submit" class="btn btn-primary w-100">
-                                                <i class="fa fa-signature"></i>
-                                                Chared All
-                                            </button>
-                                        </div>
-                                    </form>
-                                </div>
-                                <?php } ?>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <table id="table" class="table table-bordered table-hover text-center">
-                                            <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>Profile</th>
-                                                <th>Fullname</th>
-                                                <th>Subject, Grade and Section</th>
-                                                <th>Adviser</th>
-                                                <th>Requirements</th>
-                                                <th>Status</th>
-                                                <th>Action</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                                <?php $counter = 1; foreach($data3 as $result) { ?>
+                                    <?php } ?>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <table id="table" class="table table-bordered table-hover text-center">
+                                                <thead>
                                                     <tr>
-                                                        <td><?php echo $counter++; ?></td>
-                                                        <td>
-                                                            <img class="img-thumbnail" src="<?php echo $result['image_path']; ?>" alt="Profile Image" style="width: 50px; height: 50px;">
-                                                        </td>
-                                                        <td><?php echo $result['student_fullname']?></td>
-                                                        <td><?php echo $result['subject']?> - <b><?php echo 'Grade '.$result['grade'] .' ( '. $result['section'] .' ) '?></b></td>
-                                                        <td><?php echo $result['teacher_fullname']?></td>
-                                                        <td><b><?php echo empty($result['requirements'])?'No Requirements':$result['requirements'];?></b></td>
-                                                        <td><b><?php echo $result['status'] == 1 ? 'Pending':'OK';?></b></td>
-                                                        <td>
-                                                            <?php 
-                                                                if($result['status'] == 1) 
-                                                                {
-                                                            ?>
-                                                            <div class="dropdown">
-                                                                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                Action
-                                                                </button>
-                                                                <ul class="dropdown-menu p-2">
-                                                                    <li>
-                                                                        <form class="postForm" method="POST" action="<?php echo ROOT;?>manage_faculty_member_students/chared">
-                                                                            <input class="form-control" type="text" name="id" value="<?php echo $result['id']?>" readonly hidden>
-                                                                            <input class="form-control" type="text" name="status" value="<?php echo $result['status']?>" readonly hidden>
-                                                                            <button class="btn btn-primary w-100 mb-2">
-                                                                                <i class="fa fa-signature"></i>
-                                                                                Chared
-                                                                            </button>
-                                                                        </form>
-                                                                    </li>
-                                                                    <li>
-                                                                        <button class="btn btn-warning w-100 mb-2 edit_button" data-id="<?php echo $result['id']?>" data-bs-toggle="modal" data-bs-target="#editModal">
-                                                                            <i class="fa fa-pen-square"></i>
-                                                                            Edit Requirements
-                                                                        </button>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                            <?php 
-                                                                }
-                                                                else
-                                                                {
-                                                                    echo '<b>Chared</b>';
-                                                                }
-                                                            ?>
-                                                        </td>
+                                                        <th>#</th>
+                                                        <th>Profile</th>
+                                                        <th>Fullname</th>
+                                                        <th>Subject, Grade and Section</th>
+                                                        <th>Adviser</th>
+                                                        <th>Requirements</th>
+                                                        <th>Status</th>
+                                                        <th>Action</th>
                                                     </tr>
-                                                <?php }?>
-                                            </tbody>
-                                        </table>
+                                                </thead>
+                                                <tbody>
+                                                    <?php if (count($data3)) { ?>
+                                                        <?php $counter = 1;
+                                                        foreach ($data3 as $result) { ?>
+                                                            <tr>
+                                                                <td><?php echo $counter++; ?></td>
+                                                                <td>
+                                                                    <img class="img-thumbnail" src="<?php echo $result['image_path']; ?>" alt="Profile Image" style="width: 50px; height: 50px;">
+                                                                </td>
+                                                                <td><?php echo $result['student_fullname'] ?></td>
+                                                                <td><?php echo $result['subject'] ?> - <b><?php echo 'Grade ' . $result['grade'] . ' ( ' . $result['section'] . ' ) ' ?></b></td>
+                                                                <td><?php echo $result['teacher_fullname'] ?></td>
+                                                                <td><b><?php echo empty($result['requirements']) ? 'No Requirements' : $result['requirements']; ?></b></td>
+                                                                <td><b><?php echo $result['status'] == 1 ? 'Pending' : 'OK'; ?></b></td>
+                                                                <td>
+                                                                    <?php
+                                                                    if ($result['status'] == 1) {
+                                                                    ?>
+                                                                        <div class="dropdown">
+                                                                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                                Action
+                                                                            </button>
+                                                                            <ul class="dropdown-menu p-2">
+                                                                                <li>
+                                                                                    <form class="postForm" method="POST" action="<?php echo ROOT; ?>manage_faculty_member_students/chared">
+                                                                                        <input class="form-control" type="text" name="id" value="<?php echo $result['id'] ?>" readonly hidden>
+                                                                                        <input class="form-control" type="text" name="status" value="<?php echo $result['status'] ?>" readonly hidden>
+                                                                                        <button class="btn btn-primary w-100 mb-2">
+                                                                                            <i class="fa fa-signature"></i>
+                                                                                            Cleared
+                                                                                        </button>
+                                                                                    </form>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <button class="btn btn-warning w-100 mb-2 edit_button" data-id="<?php echo $result['id'] ?>" data-bs-toggle="modal" data-bs-target="#editModal">
+                                                                                        <i class="fa fa-pen-square"></i>
+                                                                                        Edit Requirements
+                                                                                    </button>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    <?php
+                                                                    } else {
+                                                                        echo '<b>Cleared</b>';
+                                                                    }
+                                                                    ?>
+                                                                </td>
+                                                            </tr>
+                                                        <?php } ?>
+                                                    <?php } else { ?>
+                                                        <?php $counter = 1;
+                                                        foreach ($data6 as $result) { ?>
+                                                            <tr>
+                                                                <td><?php echo $counter++; ?></td>
+                                                                <td>
+                                                                    <img class="img-thumbnail" src="<?php echo $result['image_path']; ?>" alt="Profile Image" style="width: 50px; height: 50px;">
+                                                                </td>
+                                                                <td><?php echo $result['student_fullname'] ?></td>
+                                                                <td><?php 
+                                                                        $arr_subjects = explode(',',$result['subjects']);
+                                                                        foreach ($data as $subject) {
+                                                                            if (in_array($subject['id'], $arr_subjects)) {
+                                                                                echo '<b>' . $subject['subject'] . ' - ' . 'Grade ' . $subject['grade'] . ' ( ' . $subject['section'] . ' ) </b>';
+                                                                            }
+                                                                        }
+                                                                    ?>
+                                                                </td>
+                                                                <td><?php echo $data7['teacher_fullname'] ?></td>
+                                                                <td><b>Add Requirements</b></td>
+                                                                <td><b>Add Requirements</b></td>
+                                                                <td>
+                                                                   <b>Add Requirements</b>
+                                                                </td>
+                                                            </tr>
+                                                        <?php } ?>
+                                                    <?php } ?>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
-                              </div>
-                              <!-- /.card-body -->
+                                <!-- /.card-body -->
                             </div>
                             <!-- /.card -->
                         </div>
@@ -153,9 +176,9 @@
                     <div class="modal-header">
                         <h1 class="modal-title fs-5" id="addModalLabel">Add Requirements</h1>
                     </div>
-                    <form class="postForm" method="POST" action="<?php echo ROOT;?>manage_faculty_member_students/store">
+                    <form class="postForm" method="POST" action="<?php echo ROOT; ?>manage_faculty_member_students/store">
                         <div class="modal-body">
-                            <input class="form-control" type="text" name="faculty_id" value="<?php echo $data4?>" readonly hidden>
+                            <input class="form-control" type="text" name="faculty_id" value="<?php echo $data4 ?>" readonly hidden>
                             <input class="form-control" type="text" name="student_ids" id="students" readonly hidden>
                             <div class="row mt-3 gap-3">
                                 <div class="col-12 input-group">
@@ -164,15 +187,14 @@
                                     </span>
                                     <select class="form-control" name="subject" id="subject" required>
                                         <option value="" selected disabled>Please select subject.</option>
-                                        <?php 
-                                            $arr_subjects = empty($data5) ? explode(",", $data2) : explode(",", $data5);
-                                            
-                                            foreach($data as $result) { 
-                                                if($result['status'] == 1 && in_array($result['id'], $arr_subjects))
-                                                {
-                                                    echo '<option value="'.$result['id'].'">'.'Gr. '.$result['grade'] . ' ( ' . $result['section'] .' -'.$result['subject'].' )'.'</option>';
-                                                }
+                                        <?php
+                                        $arr_subjects = empty($data5) ? explode(",", $data2) : explode(",", $data5);
+
+                                        foreach ($data as $result) {
+                                            if ($result['status'] == 1 && in_array($result['id'], $arr_subjects)) {
+                                                echo '<option value="' . $result['id'] . '">' . 'Gr. ' . $result['grade'] . ' ( ' . $result['section'] . ' -' . $result['subject'] . ' )' . '</option>';
                                             }
+                                        }
                                         ?>
                                     </select>
                                 </div>
@@ -198,7 +220,7 @@
                     <div class="modal-header bg-warning">
                         <h1 class="modal-title fs-5" id="editModalLabel">Edit Requirements</h1>
                     </div>
-                    <form class="postForm" method="POST" action="<?php echo ROOT;?>manage_faculty_member_students/update">
+                    <form class="postForm" method="POST" action="<?php echo ROOT; ?>manage_faculty_member_students/update">
                         <div class="modal-body">
                             <input class="form-control id" type="text" name="id" readonly hidden>
                             <div class="row mt-3 gap-3">
@@ -238,37 +260,37 @@
             });
 
             // jQuery
-            $('.postForm').on('submit', function(e){
+            $('.postForm').on('submit', function(e) {
                 e.preventDefault();
                 $.ajax({
-                    type     : "POST",
-                    cache    : false,
-                    url      : $(this).attr('action'),
-                    data     : $(this).serialize(),
-                    success  : function(data) {
+                    type: "POST",
+                    cache: false,
+                    url: $(this).attr('action'),
+                    data: $(this).serialize(),
+                    success: function(data) {
 
                         // console.log(data);
 
                         const json = JSON.parse(data);
 
-                        switch(json['response']) {
+                        switch (json['response']) {
                             case '1':
-                                    $('#subject').prop('disabled', true);
-                                    Toast.fire({
-                                        icon: 'success',
-                                        title: '<p class="text-center pt-2 text-black">' +json['message']+ '</p>'
-                                    });
+                                $('#subject').prop('disabled', true);
+                                Toast.fire({
+                                    icon: 'success',
+                                    title: '<p class="text-center pt-2 text-black">' + json['message'] + '</p>'
+                                });
 
-                                    setTimeout(() => {
-                                        location.reload();
-                                    },1500);
+                                setTimeout(() => {
+                                    location.reload();
+                                }, 1500);
 
                                 break;
                             default:
-                                    Toast.fire({
-                                        icon: 'error',
-                                        title: '<p class="text-center pt-2">' +json['message']+ '</p>'
-                                    });
+                                Toast.fire({
+                                    icon: 'error',
+                                    title: '<p class="text-center pt-2">' + json['message'] + '</p>'
+                                });
                                 break;
                         }
                     }
@@ -279,11 +301,13 @@
                 const path = '<?php echo ROOT; ?>manage_faculty_member_students/edit';
                 const id = $(this).attr('data-id');
                 $.ajax({
-                    type     : "POST",
-                    cache    : false,
-                    url      : path,
-                    data     : {id:id},
-                    success  : function(data) {
+                    type: "POST",
+                    cache: false,
+                    url: path,
+                    data: {
+                        id: id
+                    },
+                    success: function(data) {
 
                         // console.log(data);
                         const json = JSON.parse(data);
@@ -291,7 +315,7 @@
                         $('#e_student').val(json['student_fullname']);
                         $('#e_subject').val(json['subject'] + '- Grade ' + json['grade'] + ' ( ' + json['section'] + ' )');
                         $('#e_requirements').val(json['requirements']);
-                        
+
                     }
                 });
             });
@@ -305,64 +329,66 @@
                 const path = '<?php echo ROOT; ?>manage_faculty_member_students/get_student_ids';
                 const subject_id = $("#subject").val();
                 $.ajax({
-                    type     : "POST",
-                    cache    : false,
-                    url      : path,
-                    data     : {subject_id:subject_id},
-                    success  : function(data) {
+                    type: "POST",
+                    cache: false,
+                    url: path,
+                    data: {
+                        subject_id: subject_id
+                    },
+                    success: function(data) {
 
                         const json = JSON.parse(data);
                         $('#students').val(json['response']);
-                        
+
                     }
                 });
             });
-
         </script>
 
         <script>
-            $(function () {
+            $(function() {
                 $("#table").DataTable({
-                "responsive": true, "lengthChange": false, "autoWidth": false, "ordering": true, "pageLength": 10,
-                "buttons": [
-                    {
-                        extend: 'excel',
-                        title: "Faculty Member Student List",
-                        exportOptions: {
-                            columns: ':visible'
+                    "responsive": true,
+                    "lengthChange": false,
+                    "autoWidth": false,
+                    "ordering": true,
+                    "pageLength": 10,
+                    "buttons": [{
+                            extend: 'excel',
+                            title: "Faculty Member Student List",
+                            exportOptions: {
+                                columns: ':visible'
+                            },
+                            customize: function(xlsx) {
+                                const sheet = xlsx.xl.worksheets['sheet1.xml'];
+                                $('row c', sheet).each(function() {
+                                    $(this).attr('s', '51');
+                                });
+                            }
                         },
-                        customize: function(xlsx) {
-                            const sheet = xlsx.xl.worksheets['sheet1.xml'];
-                            $('row c', sheet).each(function () {
-                                $(this).attr('s', '51');
-                            });
-                        }
-                    }
-                    , 
-                    {
-                        extend: 'pdf',
-                        title: "Faculty Member Student List",
-                        exportOptions: {
-                            columns: ':visible'
+                        {
+                            extend: 'pdf',
+                            title: "Faculty Member Student List",
+                            exportOptions: {
+                                columns: ':visible'
+                            },
+                            customize: function(doc) {
+                                doc.defaultStyle.alignment = 'center';
+                                doc.content[1].table.widths = Array(doc.content[1].table.body[0].length + 1).join('*').split('');
+                            }
                         },
-                        customize: function(doc) {
-                            doc.defaultStyle.alignment = 'center';
-                            doc.content[1].table.widths = Array(doc.content[1].table.body[0].length + 1).join('*').split('');
-                        }
-                    }
-                    ,
-                    {
-                        extend: 'print',
-                        title: "Faculty Member Student List",
-                        exportOptions: {
-                            stripHtml: false,
-                            columns: ':visible',
-                        }
-                    }
-                    ,"colvis"]
+                        {
+                            extend: 'print',
+                            title: "Faculty Member Student List",
+                            exportOptions: {
+                                stripHtml: false,
+                                columns: ':visible',
+                            }
+                        }, "colvis"
+                    ]
                 }).buttons().container().appendTo('#table_wrapper .col-md-6:eq(0)');
             });
         </script>
 
     </main>
-<?php include PATH_VIEW."/components/footer.php"; ?>
+    <?php include PATH_VIEW . "/components/footer.php"; ?>

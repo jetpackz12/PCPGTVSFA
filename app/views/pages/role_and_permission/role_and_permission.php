@@ -1,12 +1,12 @@
-<?php include PATH_VIEW."/components/header.php"; ?>
+<?php include PATH_VIEW . "/components/header.php"; ?>
 
 <body>
-<?php include PATH_VIEW."/components/navbar.php"; ?>
-     <main>
+    <?php include PATH_VIEW . "/components/navbar.php"; ?>
+    <main>
         <div class="container-fluid">
             <div class="row">
                 <div class="d-none d-md-block col-md-3 col-xl-2 sidebar" style="height: 92vh;">
-                    <?php include PATH_VIEW."/components/sidebar.php"; ?>
+                    <?php include PATH_VIEW . "/components/sidebar.php"; ?>
                 </div>
                 <div class="col-12 col-md-9 col-xl-10">
                     <div class="row mt-3 gap-3">
@@ -19,58 +19,58 @@
                         </div>
                         <div class="col-12">
                             <div class="card">
-                              <div class="card-body">
-                                <table id="table" class="table table-bordered table-hover text-center">
-                                  <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Roles</th>
-                                        <th>Permission</th>
-                                        <th>Action</th>
-                                    </tr>
-                                  </thead>
-                                  <tbody>
-                                    <?php $counter = 1; foreach($data as $result) { 
-                                        if($result['id'] > '1' && $result['id'] < '6')
-                                        {
-                                            continue;
-                                        }
-                                        ?>
-                                        <tr>
-                                            <td><?php echo $counter++; ?></td>
-                                            <td>
-                                                <?php echo $result['role']; ?>
-                                            </td>
-                                            <td class="d-flex flex-wrap gap-2">
-                                                <p><?php echo $result['permission']; ?></p>
-                                            </td>
-                                            <td>
-                                                <div class="dropdown">
-                                                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    Action
-                                                    </button>
-                                                    <ul class="dropdown-menu p-2">
-                                                        <li>
-                                                            <button class="btn btn-warning w-100 mb-2 edit_button" data-id="<?php echo $result['id']; ?>" data-bs-toggle="modal" data-bs-target="#editModal">
-                                                                <i class="fa fa-pen-square"></i>
-                                                                Edit
+                                <div class="card-body">
+                                    <table id="table" class="table table-bordered table-hover text-center">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Roles</th>
+                                                <th>Permission</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php $counter = 1;
+                                            foreach ($data as $result) {
+                                                if ($result['id'] > '1' && $result['id'] < '6') {
+                                                    continue;
+                                                }
+                                            ?>
+                                                <tr>
+                                                    <td><?php echo $counter++; ?></td>
+                                                    <td>
+                                                        <?php echo $result['role']; ?>
+                                                    </td>
+                                                    <td class="d-flex justify-content-center align-items-center flex-wrap gap-2">
+                                                        <p><?php echo $result['permission']; ?></p>
+                                                    </td>
+                                                    <td>
+                                                        <div class="dropdown">
+                                                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                Action
                                                             </button>
-                                                        </li>
-                                                        <li>
-                                                            <button class="btn btn-danger w-100 mb-2 edit_button" data-id="<?php echo $result['id']; ?>" data-bs-toggle="modal" data-bs-target="#deleteModal">
-                                                                <i class="fa fa-trash"></i>
-                                                                Delete
-                                                            </button>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    <?php } ?>
-                                  </tbody>
-                                </table>
-                              </div>
-                              <!-- /.card-body -->
+                                                            <ul class="dropdown-menu p-2">
+                                                                <li>
+                                                                    <button class="btn btn-warning w-100 mb-2 edit_button" data-id="<?php echo $result['id']; ?>" data-bs-toggle="modal" data-bs-target="#editModal">
+                                                                        <i class="fa fa-pen-square"></i>
+                                                                        Edit
+                                                                    </button>
+                                                                </li>
+                                                                <li>
+                                                                    <button class="btn btn-danger w-100 mb-2 edit_button" data-id="<?php echo $result['id']; ?>" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                                                                        <i class="fa fa-trash"></i>
+                                                                        Delete
+                                                                    </button>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- /.card-body -->
                             </div>
                             <!-- /.card -->
                         </div>
@@ -86,7 +86,7 @@
                     <div class="modal-header">
                         <h1 class="modal-title fs-5" id="addModalLabel">Add New Role And Permission</h1>
                     </div>
-                    <form class="postForm" method="POST" action="<?php echo ROOT;?>role_and_permission/store">
+                    <form class="postForm" method="POST" action="<?php echo ROOT; ?>role_and_permission/store">
                         <div class="modal-body">
                             <div class="row mt-3 gap-3">
                                 <div class="col-12 input-group">
@@ -145,9 +145,15 @@
                                             </label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input check" type="checkbox" name="check[]" value="Cashier" id="check_cashier" checked>
-                                            <label class="form-check-label text-bold" for="check_cashier">
-                                                Cashier
+                                            <input class="form-check-input check" type="checkbox" name="check[]" value="Subject Assignee" id="check_subject_assignee" checked>
+                                            <label class="form-check-label text-bold" for="check_subject_assignee">
+                                                Subject Assignee
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input check" type="checkbox" name="check[]" value="Other Signatory" id="other_signatory" checked>
+                                            <label class="form-check-label text-bold" for="other_signatory">
+                                                Register Other Signatory
                                             </label>
                                         </div>
                                     </div>
@@ -180,25 +186,39 @@
                                     <div class="form-check">
                                         <input class="form-check-input check" type="checkbox" name="check[]" value="Manage User Account" id="check_manage_user_account" checked>
                                         <label class="form-check-label text-bold" for="check_manage_user_account">
-                                            Manage User Account 
+                                            Manage User Account
                                         </label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input check" type="checkbox" name="check[]" value="Fees Management" id="check_fees_management" checked>
                                         <label class="form-check-label text-bold" for="check_fees_management">
-                                            Fees Management 
+                                            Fees Management
                                         </label>
+                                    </div>
+                                    <div class="d-flex flex-row gap-3 ms-5">
+                                        <div class="form-check">
+                                            <input class="form-check-input check" type="checkbox" name="check[]" value="Fees List" id="payable_list" checked>
+                                            <label class="form-check-label text-bold" for="payable_list">
+                                                Fees List
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input check" type="checkbox" name="check[]" value="School Treasurer" id="check_cashier" checked>
+                                            <label class="form-check-label text-bold" for="check_cashier">
+                                                School Treasurer
+                                            </label>
+                                        </div>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input check" type="checkbox" name="check[]" value="Role and Permission" id="check_role_and_permission" checked>
                                         <label class="form-check-label text-bold" for="check_role_and_permission">
-                                            Role and Permission 
+                                            Role and Permission
                                         </label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input check" type="checkbox" name="check[]" value="System Settings" id="check_system_settings" checked>
                                         <label class="form-check-label text-bold" for="check_system_settings">
-                                            System Settings 
+                                            System Settings
                                         </label>
                                     </div>
                                 </div>
@@ -220,7 +240,7 @@
                     <div class="modal-header bg-warning">
                         <h1 class="modal-title fs-5" id="editModalLabel">Edit Advisory</h1>
                     </div>
-                    <form class="postForm" method="POST" action="<?php echo ROOT;?>role_and_permission/update">
+                    <form class="postForm" method="POST" action="<?php echo ROOT; ?>role_and_permission/update">
                         <div class="modal-body">
                             <input class="form-control id" type="text" name="id" readonly hidden>
                             <input class="form-control" type="text" name="e_role_old" id="e_role_old" readonly hidden>
@@ -281,9 +301,15 @@
                                             </label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input e_check" type="checkbox" name="e_check[]" value="Cashier" id="e_check_cashier">
-                                            <label class="form-check-label text-bold" for="e_check_cashier">
-                                                Cashier
+                                            <input class="form-check-input e_check" type="checkbox" name="e_check[]" value="Subject Assignee" id="e_check_subject_assignee">
+                                            <label class="form-check-label text-bold" for="e_check_subject_assignee">
+                                                Subject Assignee
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input e_check" type="checkbox" name="e_check[]" value="Other Signatory" id="e_other_signatory">
+                                            <label class="form-check-label text-bold" for="e_other_signatory">
+                                                Register Other Signatory
                                             </label>
                                         </div>
                                     </div>
@@ -316,25 +342,39 @@
                                     <div class="form-check">
                                         <input class="form-check-input e_check" type="checkbox" name="e_check[]" value="Manage User Account" id="e_check_manage_user_account">
                                         <label class="form-check-label text-bold" for="e_check_manage_user_account">
-                                            Manage User Account 
+                                            Manage User Account
                                         </label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input e_check" type="checkbox" name="e_check[]" value="Fees Management" id="e_check_fees_management">
                                         <label class="form-check-label text-bold" for="e_check_fees_management">
-                                            Fees Management 
+                                            Fees Management
                                         </label>
+                                    </div>
+                                    <div class="d-flex flex-row gap-3 ms-5">
+                                        <div class="form-check">
+                                            <input class="form-check-input e_check" type="checkbox" name="e_check[]" value="Fees List" id="e_payable_list">
+                                            <label class="form-check-label text-bold" for="e_payable_list">
+                                                Fees List
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input e_check" type="checkbox" name="e_check[]" value="School Treasurer" id="e_check_cashier">
+                                            <label class="form-check-label text-bold" for="e_check_cashier">
+                                                School Treasurer
+                                            </label>
+                                        </div>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input e_check" type="checkbox" name="e_check[]" value="Role and Permission" id="e_check_role_and_permission">
                                         <label class="form-check-label text-bold" for="e_check_role_and_permission">
-                                            Role and Permission 
+                                            Role and Permission
                                         </label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input e_check" type="checkbox" name="e_check[]" value="System Settings" id="e_check_system_settings">
                                         <label class="form-check-label text-bold" for="e_check_system_settings">
-                                            System Settings 
+                                            System Settings
                                         </label>
                                     </div>
                                 </div>
@@ -356,7 +396,7 @@
                     <div class="modal-header bg-danger">
                         <h1 class="modal-title fs-5" id="deleteModalLabel">Delete Role And Permission</h1>
                     </div>
-                    <form class="postForm" method="POST" action="<?php echo ROOT;?>role_and_permission/delete">
+                    <form class="postForm" method="POST" action="<?php echo ROOT; ?>role_and_permission/delete">
                         <div class="modal-body">
                             <input class="form-control id" type="text" name="id" readonly hidden>
                             <p>Are you sure you want to delete this role?</p>
@@ -384,36 +424,36 @@
             });
 
             // jQuery
-            $('.postForm').on('submit', function(e){
+            $('.postForm').on('submit', function(e) {
                 e.preventDefault();
                 $.ajax({
-                    type     : "POST",
-                    cache    : false,
-                    url      : $(this).attr('action'),
-                    data     : $(this).serialize(),
-                    success  : function(data) {
+                    type: "POST",
+                    cache: false,
+                    url: $(this).attr('action'),
+                    data: $(this).serialize(),
+                    success: function(data) {
 
                         // console.log(data);
 
                         const json = JSON.parse(data);
 
-                        switch(json['response']) {
+                        switch (json['response']) {
                             case '1':
-                                    Toast.fire({
-                                        icon: 'success',
-                                        title: '<p class="text-center pt-2 text-black">' +json['message']+ '</p>'
-                                    });
+                                Toast.fire({
+                                    icon: 'success',
+                                    title: '<p class="text-center pt-2 text-black">' + json['message'] + '</p>'
+                                });
 
-                                    setTimeout(() => {
-                                        location.reload();
-                                    },1500);
+                                setTimeout(() => {
+                                    location.reload();
+                                }, 1500);
 
                                 break;
                             default:
-                                    Toast.fire({
-                                        icon: 'error',
-                                        title: '<p class="text-center pt-2">' +json['message']+ '</p>'
-                                    });
+                                Toast.fire({
+                                    icon: 'error',
+                                    title: '<p class="text-center pt-2">' + json['message'] + '</p>'
+                                });
                                 break;
                         }
                     }
@@ -424,11 +464,13 @@
                 const path = '<?php echo ROOT; ?>role_and_permission/edit';
                 const id = $(this).attr('data-id');
                 $.ajax({
-                    type     : "POST",
-                    cache    : false,
-                    url      : path,
-                    data     : {id:id},
-                    success  : function(data) {
+                    type: "POST",
+                    cache: false,
+                    url: path,
+                    data: {
+                        id: id
+                    },
+                    success: function(data) {
 
                         // console.log(data);
                         const json = JSON.parse(data);
@@ -436,9 +478,29 @@
                         $('#e_role').val(json['role']);
                         $('#e_role_old').val(json['role']);
 
+                        $('#e_check_dashboard').prop('checked', false);
+                        $('#e_check_manage_student').prop('checked', false);
+                        $('#e_check_manage_advisory_and_teacher').prop('checked', false);
+                        $('#e_check_advisory').prop('checked', false);
+                        $('#e_check_teacher').prop('checked', false);
+                        $('#e_check_manage_faculty').prop('checked', false);
+                        $('#e_check_assign_subjects').prop('checked', false);
+                        $('#e_check_subject_assignee').prop('checked', false);
+                        $('#e_check_cashier').prop('checked', false);
+                        $('#e_payable_list').prop('checked', false);
+                        $('#e_other_signatory').prop('checked', false);
+                        $('#e_check_grade_section_and_subjects').prop('checked', false);
+                        $('#e_check_grade').prop('checked', false);
+                        $('#e_check_section').prop('checked', false);
+                        $('#e_check_subjects').prop('checked', false);
+                        $('#e_check_manage_user_account').prop('checked', false);
+                        $('#e_check_fees_management').prop('checked', false);
+                        $('#e_check_role_and_permission').prop('checked', false);
+                        $('#e_check_system_settings').prop('checked', false);
+
                         const arr_permissions = json['permission'].split(",");
                         let i = 0;
-                        while(i < arr_permissions.length) {
+                        while (i < arr_permissions.length) {
                             switch (arr_permissions[i]) {
                                 case 'Dashboard':
                                     $('#e_check_dashboard').prop('checked', true);
@@ -461,8 +523,17 @@
                                 case 'Assign Subjects':
                                     $('#e_check_assign_subjects').prop('checked', true);
                                     break;
-                                case 'Cashier':
+                                case 'Subject Assignee':
+                                    $('#e_check_subject_assignee').prop('checked', true);
+                                    break;
+                                case 'School Treasurer':
                                     $('#e_check_cashier').prop('checked', true);
+                                    break;
+                                case 'Fees List':
+                                    $('#e_payable_list').prop('checked', true);
+                                    break;
+                                case 'Other Signatory':
+                                    $('#e_other_signatory').prop('checked', true);
                                     break;
                                 case 'Grade Section And Subjects':
                                     $('#e_check_grade_section_and_subjects').prop('checked', true);
@@ -492,24 +563,41 @@
                             i++;
                         }
 
-                            if(!$('#e_check_advisory').prop('checked') && !$('#e_check_teacher').is(':checked'))
-                            {
-                                $('#e_check_advisory').prop('disabled', true);
-                                $('#e_check_teacher').prop('disabled', true);
-                            }
+                        if (!$('#e_check_advisory').prop('checked') && !$('#e_check_teacher').is(':checked')) {
+                            $('#e_check_advisory').prop('disabled', true);
+                            $('#e_check_teacher').prop('disabled', true);
+                        } else {
+                            $('#e_check_advisory').prop('disabled', false);
+                            $('#e_check_teacher').prop('disabled', false);
+                        }
 
-                            if(!$('#e_check_assign_subjects').is(':checked') && !$('#e_check_cashier').is(':checked'))
-                            {
-                                $('#e_check_assign_subjects').prop('disabled', true);
-                                $('#e_check_cashier').prop('disabled', true);
-                            }
+                        if (!$('#e_check_assign_subjects').is(':checked') && !$('#e_check_subject_assignee').is(':checked') && !$('#e_other_signatory').is(':checked')) {
+                            $('#e_check_assign_subjects').prop('disabled', true);
+                            $('#e_check_subject_assignee').prop('disabled', true);
+                            $('#e_other_signatory').prop('disabled', true);
+                        } else {
+                            $('#e_check_assign_subjects').prop('disabled', false);
+                            $('#e_check_subject_assignee').prop('disabled', false);
+                            $('#e_other_signatory').prop('disabled', false);
+                        }
 
-                            if(!$('#e_check_grade').is(':checked') && !$('#e_check_section').is(':checked') && !$('#e_check_subjects').is(':checked'))
-                            {
-                                $('#e_check_grade').prop('disabled', true);
-                                $('#e_check_section').prop('disabled', true);
-                                $('#e_check_subjects').prop('disabled', true);
-                            }
+                        if (!$('#e_check_grade').is(':checked') && !$('#e_check_section').is(':checked') && !$('#e_check_subjects').is(':checked')) {
+                            $('#e_check_grade').prop('disabled', true);
+                            $('#e_check_section').prop('disabled', true);
+                            $('#e_check_subjects').prop('disabled', true);
+                        } else {
+                            $('#e_check_grade').prop('disabled', false);
+                            $('#e_check_section').prop('disabled', false);
+                            $('#e_check_subjects').prop('disabled', false);
+                        }
+
+                        if (!$('#e_payable_list').prop('checked') && !$('#e_check_cashier').is(':checked')) {
+                            $('#e_payable_list').prop('disabled', true);
+                            $('#e_check_cashier').prop('disabled', true);
+                        } else {
+                            $('#e_payable_list').prop('disabled', false);
+                            $('#e_check_cashier').prop('disabled', false);
+                        }
 
                     }
                 });
@@ -528,15 +616,12 @@
 
             const addEventForAddModal = () => {
                 $('#check_manage_advisory_and_teacher').on("change", () => {
-                    if($('#check_manage_advisory_and_teacher').is(':checked'))
-                    {
+                    if ($('#check_manage_advisory_and_teacher').is(':checked')) {
                         $('#check_advisory').prop('disabled', false);
                         $('#check_teacher').prop('disabled', false);
                         $('#check_advisory').prop('checked', true);
                         $('#check_teacher').prop('checked', true);
-                    }
-                    else
-                    {
+                    } else {
                         $('#check_advisory').prop('disabled', true);
                         $('#check_teacher').prop('disabled', true);
                         $('#check_advisory').prop('checked', false);
@@ -545,8 +630,7 @@
                 });
 
                 $('#check_advisory').on("change", () => {
-                    if(!$('#check_advisory').is(':checked') && !$('#check_teacher').is(':checked'))
-                    {
+                    if (!$('#check_advisory').is(':checked') && !$('#check_teacher').is(':checked')) {
                         $('#check_manage_advisory_and_teacher').prop('checked', false);
                         $('#check_advisory').prop('disabled', true);
                         $('#check_teacher').prop('disabled', true);
@@ -554,8 +638,7 @@
                 });
 
                 $('#check_teacher').on("change", () => {
-                    if(!$('#check_advisory').is(':checked') && !$('#check_teacher').is(':checked'))
-                    {
+                    if (!$('#check_advisory').is(':checked') && !$('#check_teacher').is(':checked')) {
                         $('#check_manage_advisory_and_teacher').prop('checked', false);
                         $('#check_advisory').prop('disabled', true);
                         $('#check_teacher').prop('disabled', true);
@@ -563,52 +646,59 @@
                 });
 
                 $('#check_manage_faculty').on("change", () => {
-                    if($('#check_manage_faculty').is(':checked'))
-                    {
+                    if ($('#check_manage_faculty').is(':checked')) {
                         $('#check_assign_subjects').prop('disabled', false);
-                        $('#check_cashier').prop('disabled', false);
                         $('#check_assign_subjects').prop('checked', true);
-                        $('#check_cashier').prop('checked', true);
-                    }
-                    else
-                    {
+                        $('#check_subject_assignee').prop('disabled', false);
+                        $('#check_subject_assignee').prop('checked', true);
+                        $('#other_signatory').prop('disabled', false);
+                        $('#other_signatory').prop('checked', true);
+                    } else {
                         $('#check_assign_subjects').prop('disabled', true);
-                        $('#check_cashier').prop('disabled', true);
                         $('#check_assign_subjects').prop('checked', false);
-                        $('#check_cashier').prop('checked', false);
+                        $('#check_subject_assignee').prop('disabled', true);
+                        $('#check_subject_assignee').prop('checked', false);
+                        $('#other_signatory').prop('disabled', true);
+                        $('#other_signatory').prop('checked', false);
                     }
                 });
 
                 $('#check_assign_subjects').on("change", () => {
-                    if(!$('#check_assign_subjects').is(':checked') && !$('#check_cashier').is(':checked'))
-                    {
+                    if (!$('#check_assign_subjects').is(':checked') && !$('#check_subject_assignee').is(':checked') && !$('#other_signatory').is(':checked')) {
                         $('#check_manage_faculty').prop('checked', false);
                         $('#check_assign_subjects').prop('disabled', true);
-                        $('#check_cashier').prop('disabled', true);
+                        $('#check_subject_assignee').prop('disabled', true);
+                        $('#other_signatory').prop('disabled', true);
                     }
                 });
 
-                $('#check_cashier').on("change", () => {
-                    if(!$('#check_assign_subjects').is(':checked') && !$('#check_cashier').is(':checked'))
-                    {
+                $('#check_subject_assignee').on("change", () => {
+                    if (!$('#check_assign_subjects').is(':checked') && !$('#check_subject_assignee').is(':checked') && !$('#other_signatory').is(':checked')) {
                         $('#check_manage_faculty').prop('checked', false);
                         $('#check_assign_subjects').prop('disabled', true);
-                        $('#check_cashier').prop('disabled', true);
+                        $('#check_subject_assignee').prop('disabled', true);
+                        $('#other_signatory').prop('disabled', true);
+                    }
+                });
+
+                $('#other_signatory').on("change", () => {
+                    if (!$('#check_assign_subjects').is(':checked') && !$('#check_subject_assignee').is(':checked') && !$('#other_signatory').is(':checked')) {
+                        $('#check_manage_faculty').prop('checked', false);
+                        $('#check_assign_subjects').prop('disabled', true);
+                        $('#check_subject_assignee').prop('disabled', true);
+                        $('#other_signatory').prop('disabled', true);
                     }
                 });
 
                 $('#check_grade_section_and_subjects').on("change", () => {
-                    if($('#check_grade_section_and_subjects').is(':checked'))
-                    {
+                    if ($('#check_grade_section_and_subjects').is(':checked')) {
                         $('#check_grade').prop('disabled', false);
                         $('#check_section').prop('disabled', false);
                         $('#check_subjects').prop('disabled', false);
                         $('#check_grade').prop('checked', true);
                         $('#check_section').prop('checked', true);
                         $('#check_subjects').prop('checked', true);
-                    }
-                    else
-                    {
+                    } else {
                         $('#check_grade').prop('disabled', true);
                         $('#check_section').prop('disabled', true);
                         $('#check_subjects').prop('disabled', true);
@@ -619,8 +709,7 @@
                 });
 
                 $('#check_grade').on("change", () => {
-                    if(!$('#check_grade').is(':checked') && !$('#check_section').is(':checked') && !$('#check_subjects').is(':checked'))
-                    {
+                    if (!$('#check_grade').is(':checked') && !$('#check_section').is(':checked') && !$('#check_subjects').is(':checked')) {
                         $('#check_grade_section_and_subjects').prop('checked', false);
                         $('#check_grade').prop('disabled', true);
                         $('#check_section').prop('disabled', true);
@@ -629,8 +718,7 @@
                 });
 
                 $('#check_section').on("change", () => {
-                    if(!$('#check_grade').is(':checked') && !$('#check_section').is(':checked') && !$('#check_subjects').is(':checked'))
-                    {
+                    if (!$('#check_grade').is(':checked') && !$('#check_section').is(':checked') && !$('#check_subjects').is(':checked')) {
                         $('#check_grade_section_and_subjects').prop('checked', false);
                         $('#check_grade').prop('disabled', true);
                         $('#check_section').prop('disabled', true);
@@ -639,12 +727,41 @@
                 });
 
                 $('#check_subjects').on("change", () => {
-                    if(!$('#check_grade').is(':checked') && !$('#check_section').is(':checked') && !$('#check_subjects').is(':checked'))
-                    {
+                    if (!$('#check_grade').is(':checked') && !$('#check_section').is(':checked') && !$('#check_subjects').is(':checked')) {
                         $('#check_grade_section_and_subjects').prop('checked', false);
                         $('#check_grade').prop('disabled', true);
                         $('#check_section').prop('disabled', true);
                         $('#check_subjects').prop('disabled', true);
+                    }
+                });
+
+                $('#check_fees_management').on("change", () => {
+                    if ($('#check_fees_management').is(':checked')) {
+                        $('#payable_list').prop('disabled', false);
+                        $('#check_cashier').prop('disabled', false);
+                        $('#payable_list').prop('checked', true);
+                        $('#check_cashier').prop('checked', true);
+                    } else {
+                        $('#payable_list').prop('disabled', true);
+                        $('#check_cashier').prop('disabled', true);
+                        $('#payable_list').prop('checked', false);
+                        $('#check_cashier').prop('checked', false);
+                    }
+                });
+
+                $('#payable_list').on("change", () => {
+                    if (!$('#payable_list').is(':checked') && !$('#check_cashier').is(':checked')) {
+                        $('#check_fees_management').prop('checked', false);
+                        $('#payable_list').prop('disabled', true);
+                        $('#check_cashier').prop('disabled', true);
+                    }
+                });
+
+                $('#check_cashier').on("change", () => {
+                    if (!$('#payable_list').is(':checked') && !$('#check_cashier').is(':checked')) {
+                        $('#check_fees_management').prop('checked', false);
+                        $('#payable_list').prop('disabled', true);
+                        $('#check_cashier').prop('disabled', true);
                     }
                 });
             }
@@ -652,15 +769,12 @@
             const addEventForEditModal = () => {
 
                 $('#e_check_manage_advisory_and_teacher').on("change", () => {
-                    if($('#e_check_manage_advisory_and_teacher').is(':checked'))
-                    {
+                    if ($('#e_check_manage_advisory_and_teacher').is(':checked')) {
                         $('#e_check_advisory').prop('disabled', false);
                         $('#e_check_teacher').prop('disabled', false);
                         $('#e_check_advisory').prop('checked', true);
                         $('#e_check_teacher').prop('checked', true);
-                    }
-                    else
-                    {
+                    } else {
                         $('#e_check_advisory').prop('disabled', true);
                         $('#e_check_teacher').prop('disabled', true);
                         $('#e_check_advisory').prop('checked', false);
@@ -669,8 +783,7 @@
                 });
 
                 $('#e_check_advisory').on("change", () => {
-                    if(!$('#e_check_advisory').is(':checked') && !$('#e_check_teacher').is(':checked'))
-                    {
+                    if (!$('#e_check_advisory').is(':checked') && !$('#e_check_teacher').is(':checked')) {
                         $('#e_check_manage_advisory_and_teacher').prop('checked', false);
                         $('#e_check_advisory').prop('disabled', true);
                         $('#e_check_teacher').prop('disabled', true);
@@ -678,8 +791,7 @@
                 });
 
                 $('#e_check_teacher').on("change", () => {
-                    if(!$('#e_check_advisory').is(':checked') && !$('#e_check_teacher').is(':checked'))
-                    {
+                    if (!$('#e_check_advisory').is(':checked') && !$('#e_check_teacher').is(':checked')) {
                         $('#e_check_manage_advisory_and_teacher').prop('checked', false);
                         $('#e_check_advisory').prop('disabled', true);
                         $('#e_check_teacher').prop('disabled', true);
@@ -687,52 +799,59 @@
                 });
 
                 $('#e_check_manage_faculty').on("change", () => {
-                    if($('#e_check_manage_faculty').is(':checked'))
-                    {
+                    if ($('#e_check_manage_faculty').is(':checked')) {
                         $('#e_check_assign_subjects').prop('disabled', false);
-                        $('#e_check_cashier').prop('disabled', false);
+                        $('#e_check_subject_assignee').prop('disabled', false);
+                        $('#e_other_signatory').prop('disabled', false);
                         $('#e_check_assign_subjects').prop('checked', true);
-                        $('#e_check_cashier').prop('checked', true);
-                    }
-                    else
-                    {
+                        $('#e_check_subject_assignee').prop('checked', true);
+                        $('#e_other_signatory').prop('checked', true);
+                    } else {
                         $('#e_check_assign_subjects').prop('disabled', true);
-                        $('#e_check_cashier').prop('disabled', true);
+                        $('#e_check_subject_assignee').prop('disabled', true);
+                        $('#e_other_signatory').prop('disabled', true);
                         $('#e_check_assign_subjects').prop('checked', false);
-                        $('#e_check_cashier').prop('checked', false);
+                        $('#e_check_subject_assignee').prop('checked', false);
+                        $('#e_other_signatory').prop('checked', false);
                     }
                 });
 
                 $('#e_check_assign_subjects').on("change", () => {
-                    if(!$('#e_check_assign_subjects').is(':checked') && !$('#e_check_cashier').is(':checked'))
-                    {
+                    if (!$('#e_check_assign_subjects').is(':checked') && !$('#e_check_subject_assignee').is(':checked') && !$('#e_other_signatory').is(':checked')) {
                         $('#e_check_manage_faculty').prop('checked', false);
                         $('#e_check_assign_subjects').prop('disabled', true);
-                        $('#e_check_cashier').prop('disabled', true);
+                        $('#e_check_subject_assignee').prop('disabled', true);
+                        $('#e_other_signatory').prop('disabled', true);
                     }
                 });
 
-                $('#e_check_cashier').on("change", () => {
-                    if(!$('#e_check_assign_subjects').is(':checked') && !$('#e_check_cashier').is(':checked'))
-                    {
+                $('#e_check_subject_assignee').on("change", () => {
+                    if (!$('#e_check_assign_subjects').is(':checked') && !$('#e_check_subject_assignee').is(':checked') && !$('#e_other_signatory').is(':checked')) {
                         $('#e_check_manage_faculty').prop('checked', false);
                         $('#e_check_assign_subjects').prop('disabled', true);
-                        $('#e_check_cashier').prop('disabled', true);
+                        $('#e_check_subject_assignee').prop('disabled', true);
+                        $('#e_other_signatory').prop('disabled', true);
+                    }
+                });
+
+                $('#e_other_signatory').on("change", () => {
+                    if (!$('#e_check_assign_subjects').is(':checked') && !$('#e_check_subject_assignee').is(':checked') && !$('#e_other_signatory').is(':checked')) {
+                        $('#e_check_manage_faculty').prop('checked', false);
+                        $('#e_check_assign_subjects').prop('disabled', true);
+                        $('#e_check_subject_assignee').prop('disabled', true);
+                        $('#e_other_signatory').prop('disabled', true);
                     }
                 });
 
                 $('#e_check_grade_section_and_subjects').on("change", () => {
-                    if($('#e_check_grade_section_and_subjects').is(':checked'))
-                    {
+                    if ($('#e_check_grade_section_and_subjects').is(':checked')) {
                         $('#e_check_grade').prop('disabled', false);
                         $('#e_check_section').prop('disabled', false);
                         $('#e_check_subjects').prop('disabled', false);
                         $('#e_check_grade').prop('checked', true);
                         $('#e_check_section').prop('checked', true);
                         $('#e_check_subjects').prop('checked', true);
-                    }
-                    else
-                    {
+                    } else {
                         $('#e_check_grade').prop('disabled', true);
                         $('#e_check_section').prop('disabled', true);
                         $('#e_check_subjects').prop('disabled', true);
@@ -743,8 +862,7 @@
                 });
 
                 $('#e_check_grade').on("change", () => {
-                    if(!$('#e_check_grade').is(':checked') && !$('#e_check_section').is(':checked') && !$('#e_check_subjects').is(':checked'))
-                    {
+                    if (!$('#e_check_grade').is(':checked') && !$('#e_check_section').is(':checked') && !$('#e_check_subjects').is(':checked')) {
                         $('#e_check_grade_section_and_subjects').prop('checked', false);
                         $('#e_check_grade').prop('disabled', true);
                         $('#e_check_section').prop('disabled', true);
@@ -753,8 +871,7 @@
                 });
 
                 $('#e_check_section').on("change", () => {
-                    if(!$('#e_check_grade').is(':checked') && !$('#e_check_section').is(':checked') && !$('#e_check_subjects').is(':checked'))
-                    {
+                    if (!$('#e_check_grade').is(':checked') && !$('#e_check_section').is(':checked') && !$('#e_check_subjects').is(':checked')) {
                         $('#e_check_grade_section_and_subjects').prop('checked', false);
                         $('#e_check_grade').prop('disabled', true);
                         $('#e_check_section').prop('disabled', true);
@@ -763,12 +880,41 @@
                 });
 
                 $('#e_check_subjects').on("change", () => {
-                    if(!$('#e_check_grade').is(':checked') && !$('#e_check_section').is(':checked') && !$('#e_check_subjects').is(':checked'))
-                    {
+                    if (!$('#e_check_grade').is(':checked') && !$('#e_check_section').is(':checked') && !$('#e_check_subjects').is(':checked')) {
                         $('#e_check_grade_section_and_subjects').prop('checked', false);
                         $('#e_check_grade').prop('disabled', true);
                         $('#e_check_section').prop('disabled', true);
                         $('#e_check_subjects').prop('disabled', true);
+                    }
+                });
+
+                $('#e_check_fees_management').on("change", () => {
+                    if ($('#e_check_fees_management').is(':checked')) {
+                        $('#e_payable_list').prop('disabled', false);
+                        $('#e_check_cashier').prop('disabled', false);
+                        $('#e_payable_list').prop('checked', true);
+                        $('#e_check_cashier').prop('checked', true);
+                    } else {
+                        $('#e_payable_list').prop('disabled', true);
+                        $('#e_check_cashier').prop('disabled', true);
+                        $('#e_payable_list').prop('checked', false);
+                        $('#e_check_cashier').prop('checked', false);
+                    }
+                });
+
+                $('#e_payable_list').on("change", () => {
+                    if (!$('#e_payable_list').is(':checked') && !$('#e_check_cashier').is(':checked')) {
+                        $('#e_check_fees_management').prop('checked', false);
+                        $('#e_payable_list').prop('disabled', true);
+                        $('#e_check_cashier').prop('disabled', true);
+                    }
+                });
+
+                $('#e_check_cashier').on("change", () => {
+                    if (!$('#e_payable_list').is(':checked') && !$('#e_check_cashier').is(':checked')) {
+                        $('#e_check_fees_management').prop('checked', false);
+                        $('#e_payable_list').prop('disabled', true);
+                        $('#e_check_cashier').prop('disabled', true);
                     }
                 });
             }
@@ -779,51 +925,51 @@
                 addEventForAddModal();
                 addEventForEditModal();
             }
-
         </script>
 
         <script>
-            $(function () {
+            $(function() {
                 $("#table").DataTable({
-                "responsive": true, "lengthChange": false, "autoWidth": false, "ordering": false, "pageLength": 5,
-                "buttons": [
-                    {
-                        extend: 'excel',
-                        title: "Role And Permission List",
-                        exportOptions: {
-                            columns: ':visible'
+                    "responsive": true,
+                    "lengthChange": false,
+                    "autoWidth": false,
+                    "ordering": false,
+                    "pageLength": 5,
+                    "buttons": [{
+                            extend: 'excel',
+                            title: "Role And Permission List",
+                            exportOptions: {
+                                columns: ':visible'
+                            },
+                            customize: function(xlsx) {
+                                const sheet = xlsx.xl.worksheets['sheet1.xml'];
+                                $('row c', sheet).each(function() {
+                                    $(this).attr('s', '51');
+                                });
+                            }
                         },
-                        customize: function(xlsx) {
-                            const sheet = xlsx.xl.worksheets['sheet1.xml'];
-                            $('row c', sheet).each(function () {
-                                $(this).attr('s', '51');
-                            });
-                        }
-                    }
-                    , 
-                    {
-                        extend: 'pdf',
-                        title: "Role And Permission List",
-                        exportOptions: {
-                            columns: ':visible'
+                        {
+                            extend: 'pdf',
+                            title: "Role And Permission List",
+                            exportOptions: {
+                                columns: ':visible'
+                            },
+                            customize: function(doc) {
+                                doc.defaultStyle.alignment = 'center';
+                                doc.content[1].table.widths = Array(doc.content[1].table.body[0].length + 1).join('*').split('');
+                            }
                         },
-                        customize: function(doc) {
-                            doc.defaultStyle.alignment = 'center';
-                            doc.content[1].table.widths = Array(doc.content[1].table.body[0].length + 1).join('*').split('');
-                        }
-                    }
-                    ,
-                    {
-                        extend: 'print',
-                        title: "Role And Permission List",
-                        exportOptions: {
-                            stripHtml: false,
-                            columns: ':visible',
-                        }
-                    }
-                    ,"colvis"]
+                        {
+                            extend: 'print',
+                            title: "Role And Permission List",
+                            exportOptions: {
+                                stripHtml: false,
+                                columns: ':visible',
+                            }
+                        }, "colvis"
+                    ]
                 }).buttons().container().appendTo('#table_wrapper .col-md-6:eq(0)');
             });
         </script>
     </main>
-<?php include PATH_VIEW."/components/footer.php"; ?>
+    <?php include PATH_VIEW . "/components/footer.php"; ?>

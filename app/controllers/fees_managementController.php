@@ -31,6 +31,8 @@ class fees_managementController extends Controller
 		
 		$object = new feesModel();
 		$fees = $object->index();
+		
+		unset($_SESSION['filter_subject_id']);
 
         $this->controller->view()->render('pages/fees_management/fees_management.php', $fees);
 	}

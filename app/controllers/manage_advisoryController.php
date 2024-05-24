@@ -36,6 +36,8 @@ class manage_advisoryController extends Controller
 		$object = new advisoryModel();
 		$advisory = $object->index();
 		
+		unset($_SESSION['filter_subject_id']);
+		
         $this->controller->view()->render3('pages/manage_advisory/manage_advisory.php', $teacher, $section, $advisory);
 	}
 

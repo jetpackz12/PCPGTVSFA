@@ -32,6 +32,8 @@ class manage_teacherController extends Controller
 		$object = new userModel();
 		$teacher = $object->index_teacher();
 		
+		unset($_SESSION['filter_subject_id']);
+		
         $this->controller->view()->render('pages/manage_teacher/manage_teacher.php', $teacher);
 	}
 
